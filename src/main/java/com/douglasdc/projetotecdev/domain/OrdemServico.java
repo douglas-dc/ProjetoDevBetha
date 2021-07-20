@@ -15,6 +15,7 @@ public class OrdemServico implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	
 	private LocalDate instante;
 	
 	public OrdemServico() {
