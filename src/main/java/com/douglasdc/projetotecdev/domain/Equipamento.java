@@ -1,7 +1,6 @@
 package com.douglasdc.projetotecdev.domain;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,25 +8,29 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class OrdemServico implements Serializable {
+public class Equipamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
-	private LocalDate instante;
+	private String tipo;
 	
-	private Equipamento equipamento;
+	private String descricao;
 	
-	public OrdemServico() {
+	private OrdemServico ordemServico;
+	
+	public Equipamento() {
 		
 	}
 
-	public OrdemServico(Integer id, LocalDate instante) {
+	public Equipamento(Integer id, String tipo, String descricao, OrdemServico ordemServico) {
 		super();
 		this.id = id;
-		this.instante = instante;
+		this.tipo = tipo;
+		this.descricao = descricao;
+		this.setOrdemServico(ordemServico);
 	}
 
 	public Integer getId() {
@@ -38,22 +41,30 @@ public class OrdemServico implements Serializable {
 		this.id = id;
 	}
 
-	public LocalDate getInstante() {
-		return instante;
+	public String getTipo() {
+		return tipo;
 	}
 
-	public void setInstante(LocalDate instante) {
-		this.instante = instante;
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
-	public Equipamento getEquipamento() {
-		return equipamento;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setEquipamento(Equipamento equipamento) {
-		this.equipamento = equipamento;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
-	
+
+	public OrdemServico getOrdemServico() {
+		return ordemServico;
+	}
+
+	public void setOrdemServico(OrdemServico ordemServico) {
+		this.ordemServico = ordemServico;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -70,7 +81,7 @@ public class OrdemServico implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		OrdemServico other = (OrdemServico) obj;
+		Equipamento other = (Equipamento) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -78,4 +89,6 @@ public class OrdemServico implements Serializable {
 			return false;
 		return true;
 	}
+	
+	
 }
