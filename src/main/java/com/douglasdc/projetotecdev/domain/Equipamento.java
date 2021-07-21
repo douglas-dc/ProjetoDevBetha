@@ -3,34 +3,37 @@ package com.douglasdc.projetotecdev.domain;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Equipamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
 	private String tipo;
 	
 	private String descricao;
 	
-	private OrdemServico ordemServico;
+	@OneToOne
+	@JoinColumn(name="ordemDeServico_id")
+	@MapsId
+	private OrdemDeServico ordemDeServico;
 	
 	public Equipamento() {
 		
 	}
 
-	public Equipamento(Integer id, String tipo, String descricao, OrdemServico ordemServico) {
+	public Equipamento(Integer id, String tipo, String descricao, OrdemDeServico ordemDeServico) {
 		super();
 		this.id = id;
 		this.tipo = tipo;
 		this.descricao = descricao;
-		this.setOrdemServico(ordemServico);
+		this.setOrdemDeServico(ordemDeServico);
 	}
 
 	public Integer getId() {
@@ -57,12 +60,12 @@ public class Equipamento implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public OrdemServico getOrdemServico() {
-		return ordemServico;
+	public OrdemDeServico getOrdemDeServico() {
+		return ordemDeServico;
 	}
 
-	public void setOrdemServico(OrdemServico ordemServico) {
-		this.ordemServico = ordemServico;
+	public void setOrdemDeServico(OrdemDeServico ordemDeServico) {
+		this.ordemDeServico = ordemDeServico;
 	}
 
 	@Override

@@ -3,9 +3,9 @@ package com.douglasdc.projetotecdev.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.douglasdc.projetotecdev.domain.OrdemServico;
+import com.douglasdc.projetotecdev.domain.OrdemDeServico;
 
 @Repository
-public interface OrdemServicoRepository extends JpaRepository<OrdemServico, Integer> {
+public interface OrdemServicoRepository extends JpaRepository<OrdemDeServico, Integer> {
 
 }

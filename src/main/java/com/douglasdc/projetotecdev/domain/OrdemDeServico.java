@@ -3,13 +3,15 @@ package com.douglasdc.projetotecdev.domain;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
-public class OrdemServico implements Serializable {
+public class OrdemDeServico implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -18,13 +20,14 @@ public class OrdemServico implements Serializable {
 	
 	private LocalDate instante;
 	
+	@OneToOne(cascade=CascadeType.ALL, mappedBy="ordemDeServico")
 	private Equipamento equipamento;
 	
-	public OrdemServico() {
+	public OrdemDeServico() {
 		
 	}
 
-	public OrdemServico(Integer id, LocalDate instante) {
+	public OrdemDeServico(Integer id, LocalDate instante) {
 		super();
 		this.id = id;
 		this.instante = instante;
@@ -70,7 +73,7 @@ public class OrdemServico implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		OrdemServico other = (OrdemServico) obj;
+		OrdemDeServico other = (OrdemDeServico) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
