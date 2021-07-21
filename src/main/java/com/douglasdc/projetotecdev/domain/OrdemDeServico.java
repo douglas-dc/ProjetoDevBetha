@@ -33,10 +33,11 @@ public class OrdemDeServico implements Serializable {
 		
 	}
 
-	public OrdemDeServico(Integer id, LocalDate instante, String cliente, StatusDaOrdemDeServico status) {
+	public OrdemDeServico(Integer id, LocalDate instante, String equipamento, String cliente, StatusDaOrdemDeServico status) {
 		super();
 		this.id = id;
 		this.instante = instante;
+		this.equipamento = equipamento;
 		this.cliente = cliente;
 		this.status = (status == null) ? null : status.getCod();
 	}
