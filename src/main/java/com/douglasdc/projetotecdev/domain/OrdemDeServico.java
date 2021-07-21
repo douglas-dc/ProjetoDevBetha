@@ -3,12 +3,12 @@ package com.douglasdc.projetotecdev.domain;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
+//import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+//import javax.persistence.OneToOne;
 
 import com.douglasdc.projetotecdev.domain.enums.StatusDaOrdemDeServico;
 
@@ -22,8 +22,8 @@ public class OrdemDeServico implements Serializable {
 	
 	private LocalDate instante;
 	
-	@OneToOne(cascade=CascadeType.ALL, mappedBy="ordemDeServico")
-	private Equipamento equipamento;
+	//@OneToOne(cascade=CascadeType.ALL, mappedBy="ordemDeServico")
+	private String equipamento;
 	
 	private String cliente;
 	
@@ -56,15 +56,15 @@ public class OrdemDeServico implements Serializable {
 	public void setInstante(LocalDate instante) {
 		this.instante = instante;
 	}
-
-	public Equipamento getEquipamento() {
+	
+	public String getEquipamento() {
 		return equipamento;
 	}
 
-	public void setEquipamento(Equipamento equipamento) {
+	public void setEquipamento(String equipamento) {
 		this.equipamento = equipamento;
 	}
-	
+
 	public String getCliente() {
 		return cliente;
 	}

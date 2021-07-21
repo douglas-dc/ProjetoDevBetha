@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+/*import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToOne;*/
 
 @Entity
 public class Equipamento implements Serializable {
@@ -19,10 +19,10 @@ public class Equipamento implements Serializable {
 	
 	private String descricao;
 	
-	@OneToOne
+	/*@OneToOne
 	@JoinColumn(name="ordemDeServico_id")
 	@MapsId
-	private OrdemDeServico ordemDeServico;
+	private OrdemDeServico ordemDeServico;*/
 	
 	public Equipamento() {
 		
@@ -33,7 +33,7 @@ public class Equipamento implements Serializable {
 		this.id = id;
 		this.tipo = tipo;
 		this.descricao = descricao;
-		this.ordemDeServico = ordemDeServico;
+		//this.ordemDeServico = ordemDeServico;
 	}
 
 	public Integer getId() {
@@ -60,13 +60,13 @@ public class Equipamento implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public OrdemDeServico getOrdemDeServico() {
+	/*public OrdemDeServico getOrdemDeServico() {
 		return ordemDeServico;
 	}
 
 	public void setOrdemDeServico(OrdemDeServico ordemDeServico) {
 		this.ordemDeServico = ordemDeServico;
-	}
+	}*/
 
 	@Override
 	public int hashCode() {
