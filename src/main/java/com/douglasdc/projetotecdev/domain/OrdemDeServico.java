@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.douglasdc.projetotecdev.domain.enums.StatusDaOrdemDeServico;
+
 @Entity
 public class OrdemDeServico implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -23,14 +25,20 @@ public class OrdemDeServico implements Serializable {
 	@OneToOne(cascade=CascadeType.ALL, mappedBy="ordemDeServico")
 	private Equipamento equipamento;
 	
+	private String cliente;
+	
+	private Integer status;
+	
 	public OrdemDeServico() {
 		
 	}
 
-	public OrdemDeServico(Integer id, LocalDate instante) {
+	public OrdemDeServico(Integer id, LocalDate instante, String cliente, StatusDaOrdemDeServico status) {
 		super();
 		this.id = id;
 		this.instante = instante;
+		this.cliente = cliente;
+		this.status = (status == null) ? null : status.getCod();
 	}
 
 	public Integer getId() {
@@ -55,6 +63,22 @@ public class OrdemDeServico implements Serializable {
 
 	public void setEquipamento(Equipamento equipamento) {
 		this.equipamento = equipamento;
+	}
+	
+	public String getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(String cliente) {
+		this.cliente = cliente;
+	}
+	
+	public StatusDaOrdemDeServico getStatus() {
+		return StatusDaOrdemDeServico.toEnum(status);
+	}
+
+	public void setStatus(StatusDaOrdemDeServico status) {
+		this.status = status.getCod();
 	}
 	
 	@Override

@@ -33,7 +33,7 @@ public class Equipamento implements Serializable {
 		this.id = id;
 		this.tipo = tipo;
 		this.descricao = descricao;
-		this.setOrdemDeServico(ordemDeServico);
+		this.ordemDeServico = ordemDeServico;
 	}
 
 	public Integer getId() {
@@ -92,6 +92,4 @@ public class Equipamento implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
 }
