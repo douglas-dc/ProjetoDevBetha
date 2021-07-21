@@ -6,16 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.douglasdc.projetotecdev.domain.OrdemDeServico;
-import com.douglasdc.projetotecdev.repositories.OrdemServicoRepository;
+import com.douglasdc.projetotecdev.repositories.OrdemDeServicoRepository;
 
 @Service
 public class OrdemDeServicoService {
 
 	@Autowired
-	private OrdemServicoRepository repo;
+	private OrdemDeServicoRepository repo;
 	
 	public OrdemDeServico buscarPorId(Integer id) {
 		Optional<OrdemDeServico> obj = repo.findById(id);
 		return obj.orElse(null);
+	}
+
+	public OrdemDeServico insert(OrdemDeServico obj) {
+		obj.setId(null);
+		return repo.save(obj);
 	}
 }

@@ -10,13 +10,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.douglasdc.projetotecdev.domain.OrdemDeServico;
 import com.douglasdc.projetotecdev.domain.enums.StatusDaOrdemDeServico;
-import com.douglasdc.projetotecdev.repositories.OrdemServicoRepository;
+import com.douglasdc.projetotecdev.repositories.OrdemDeServicoRepository;
 
 @SpringBootApplication
 public class ProjetotecdevApplication implements CommandLineRunner{
 
 	@Autowired
-	private OrdemServicoRepository ordemServicoRepository;
+	private OrdemDeServicoRepository ordemServicoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetotecdevApplication.class, args);

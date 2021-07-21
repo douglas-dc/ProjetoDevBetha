@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.douglasdc.projetotecdev.domain.OrdemDeServico;
 
 @Repository
-public interface OrdemServicoRepository extends JpaRepository<OrdemDeServico, Integer> {
+public interface OrdemDeServicoRepository extends JpaRepository<OrdemDeServico, Integer> {
 
 }
