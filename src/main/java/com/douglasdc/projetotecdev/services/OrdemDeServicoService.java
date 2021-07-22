@@ -19,7 +19,7 @@ public class OrdemDeServicoService {
 		return obj.orElse(null);
 	}
 
-	public OrdemDeServico insert(OrdemDeServico obj) {
+	public OrdemDeServico inserirOrdem(OrdemDeServico obj) {
 		obj.setId(null);
 		return repo.save(obj);
 	}

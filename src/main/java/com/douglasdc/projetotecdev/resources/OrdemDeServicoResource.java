@@ -30,7 +30,7 @@ public class OrdemDeServicoResource {
 
 	@PostMapping
 	public ResponseEntity<Void> insert(@RequestBody OrdemDeServico obj) {
-		obj = service.insert(obj);
+		obj = service.inserirOrdem(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
