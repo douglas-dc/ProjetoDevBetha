@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,15 +39,19 @@ public class OrdemDeServicoResource {
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	
 
 	@GetMapping
-	public ResponseEntity<List<OrdemDeServicoDTO>> buscarTodos() {
+	public ResponseEntity<List<OrdemDeServicoDTO>> findAll() {
 		List<OrdemDeServico> lista = service.buscarTodos();
 		List<OrdemDeServicoDTO> listaDto = lista.stream().map(obj -> new OrdemDeServicoDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listaDto);
 	}
 
+	@DeleteMapping(value="/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		service.deletarPorId(id);
+		return ResponseEntity.noContent().build();
+	}
 	
 
 }

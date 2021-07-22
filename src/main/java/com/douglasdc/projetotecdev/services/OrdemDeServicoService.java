@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.douglasdc.projetotecdev.domain.OrdemDeServico;
 import com.douglasdc.projetotecdev.repositories.OrdemDeServicoRepository;
+import com.douglasdc.projetotecdev.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class OrdemDeServicoService {
@@ -17,7 +18,8 @@ public class OrdemDeServicoService {
 	
 	public OrdemDeServico buscarPorId(Integer id) {
 		Optional<OrdemDeServico> obj = repo.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Ordem de Serviço não encontrada! Id: " + id + ", Tipo: " + OrdemDeServico.class.getName()));
 	}
 
 	public OrdemDeServico inserirOrdem(OrdemDeServico obj) {
@@ -27,5 +29,9 @@ public class OrdemDeServicoService {
 
 	public List<OrdemDeServico> buscarTodos() {
 		return repo.findAll();
+	}
+	
+	public void deletarPorId(Integer id) {
+		repo.deleteById(id);
 	}
 }

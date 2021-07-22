@@ -25,7 +25,6 @@ public class ProjetotecdevApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-
 		OrdemDeServico os1 = new OrdemDeServico(null, LocalDate.now(), "Celular", "Marcos", StatusDaOrdemDeServico.PENDENTE);
 		OrdemDeServico os2 = new OrdemDeServico(null, LocalDate.parse("2021-04-15"), "Televisão", "Joana", StatusDaOrdemDeServico.AVALIADA);
 		OrdemDeServico os3 = new OrdemDeServico(null, LocalDate.parse("2021-02-11"), "Microondas", "Pedro", StatusDaOrdemDeServico.APROVADA);
