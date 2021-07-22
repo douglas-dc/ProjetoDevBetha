@@ -2,6 +2,7 @@ package com.douglasdc.projetotecdev.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.douglasdc.projetotecdev.domain.OrdemDeServico;
+import com.douglasdc.projetotecdev.dto.OrdemDeServicoDTO;
 import com.douglasdc.projetotecdev.services.OrdemDeServicoService;
 
 @RestController
@@ -39,9 +41,10 @@ public class OrdemDeServicoResource {
 	
 
 	@GetMapping
-	public ResponseEntity<List<OrdemDeServico>> buscarTodos() {
+	public ResponseEntity<List<OrdemDeServicoDTO>> buscarTodos() {
 		List<OrdemDeServico> lista = service.buscarTodos();
-		return ResponseEntity.ok().body(lista);
+		List<OrdemDeServicoDTO> listaDto = lista.stream().map(obj -> new OrdemDeServicoDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listaDto);
 	}
 
 	
