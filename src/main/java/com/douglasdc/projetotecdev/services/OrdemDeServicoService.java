@@ -1,5 +1,6 @@
 package com.douglasdc.projetotecdev.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,9 @@ public class OrdemDeServicoService {
 	public OrdemDeServico inserirOrdem(OrdemDeServico obj) {
 		obj.setId(null);
 		return repo.save(obj);
+	}
+
+	public List<OrdemDeServico> buscarTodos() {
+		return repo.findAll();
 	}
 }

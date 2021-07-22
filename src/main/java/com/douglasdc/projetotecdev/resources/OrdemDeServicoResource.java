@@ -1,6 +1,7 @@
 package com.douglasdc.projetotecdev.resources;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,5 +36,14 @@ public class OrdemDeServicoResource {
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
+	
+
+	@GetMapping
+	public ResponseEntity<List<OrdemDeServico>> buscarTodos() {
+		List<OrdemDeServico> lista = service.buscarTodos();
+		return ResponseEntity.ok().body(lista);
+	}
+
+	
 
 }
