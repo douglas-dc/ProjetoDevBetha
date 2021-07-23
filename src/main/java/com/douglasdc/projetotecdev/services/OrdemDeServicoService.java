@@ -19,7 +19,7 @@ public class OrdemDeServicoService {
 	public OrdemDeServico buscarPorId(Integer id) {
 		Optional<OrdemDeServico> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Ordem de Serviço não encontrada! Id: " + id + ", Tipo: " + OrdemDeServico.class.getName()));
+				"Ordem de serviço não encontrada! Id: " + id + ", Tipo: " + OrdemDeServico.class.getName()));
 	}
 
 	public OrdemDeServico inserirOrdem(OrdemDeServico obj) {
@@ -36,6 +36,9 @@ public class OrdemDeServicoService {
 	}
 
 	public List<OrdemDeServico> buscarPorStatus(){
+		if (repo.findAprovadas(2).isEmpty()) {
+			throw new ObjectNotFoundException("Nenhuma Ordem de serviço encontrada com o seguinte parâmetro: APROVADA");
+		}
 		return repo.findAprovadas(2);
 	}
 }
