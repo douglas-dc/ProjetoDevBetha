@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.douglasdc.projetotecdev.domain.OrdemDeServico;
+import com.douglasdc.projetotecdev.domain.enums.StatusDaOrdemDeServico;
 import com.douglasdc.projetotecdev.dto.OrdemDeServicoDTO;
 import com.douglasdc.projetotecdev.services.OrdemDeServicoService;
 
@@ -36,6 +37,7 @@ public class OrdemDeServicoResource {
 	@PostMapping
 	public ResponseEntity<Void> insert(@RequestBody OrdemDeServico obj) {
 		obj.setInstante(LocalDate.now());
+		obj.setStatus(StatusDaOrdemDeServico.PENDENTE);;
 		obj = service.inserirOrdem(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -60,4 +62,9 @@ public class OrdemDeServicoResource {
 		List<OrdemDeServico> obj = service.buscarPorStatus();
 		return ResponseEntity.ok().body(obj);
 	}
+	
+	/*@PutMapping(value="/{id}")
+	public ResponseEntity<Void> update(@PathVariable Integer id){
+		
+	}*/
 }
