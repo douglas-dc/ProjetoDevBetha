@@ -1,6 +1,7 @@
 package com.douglasdc.projetotecdev.resources;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +35,7 @@ public class OrdemDeServicoResource {
 
 	@PostMapping
 	public ResponseEntity<Void> insert(@RequestBody OrdemDeServico obj) {
+		obj.setInstante(LocalDate.now());
 		obj = service.inserirOrdem(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -58,5 +60,4 @@ public class OrdemDeServicoResource {
 		List<OrdemDeServico> obj = service.buscarPorStatus();
 		return ResponseEntity.ok().body(obj);
 	}
-
 }
