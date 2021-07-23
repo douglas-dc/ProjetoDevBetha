@@ -53,5 +53,10 @@ public class OrdemDeServicoResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@GetMapping(value="/aprovadas")
+	public ResponseEntity<List<OrdemDeServico>> findByStatus() {
+		List<OrdemDeServico> obj = service.buscarPorStatus();
+		return ResponseEntity.ok().body(obj);
+	}
 
 }

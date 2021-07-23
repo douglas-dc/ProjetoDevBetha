@@ -34,4 +34,8 @@ public class OrdemDeServicoService {
 	public void deletarPorId(Integer id) {
 		repo.deleteById(id);
 	}
+
+	public List<OrdemDeServico> buscarPorStatus(){
+		return repo.findAprovadas(2);
+	}
 }
