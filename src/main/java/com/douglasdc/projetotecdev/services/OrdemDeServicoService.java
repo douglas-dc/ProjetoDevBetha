@@ -46,6 +46,12 @@ public class OrdemDeServicoService {
 	public OrdemDeServico update(OrdemDeServico obj) {
 		OrdemDeServico newObj = find(obj.getId());
 		updateData(newObj, obj); 
+		if (newObj.getStatus().getCod() == 1) {
+			System.out.println(newObj);
+		}
+		if (newObj.getStatus().getCod() == 2 || newObj.getStatus().getCod() == 3) {
+			System.out.println(newObj);
+		}
 		return repo.save(newObj);
 	}
 	
