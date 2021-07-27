@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.douglasdc.projetotecdev.domain.OrdemDeServico;
+import com.douglasdc.projetotecdev.dto.OrdemDeServicoDTO2;
 import com.douglasdc.projetotecdev.repositories.OrdemDeServicoRepository;
 import com.douglasdc.projetotecdev.services.exceptions.ObjectNotFoundException;
 
@@ -16,29 +17,43 @@ public class OrdemDeServicoService {
 	@Autowired
 	private OrdemDeServicoRepository repo;
 	
-	public OrdemDeServico buscarPorId(Integer id) {
+	public OrdemDeServico find(Integer id) {
 		Optional<OrdemDeServico> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Ordem de serviço não encontrada! Id: " + id + ", Tipo: " + OrdemDeServico.class.getName()));
 	}
 
-	public OrdemDeServico inserirOrdem(OrdemDeServico obj) {
+	public OrdemDeServico insert(OrdemDeServico obj) {
 		obj.setId(null);
 		return repo.save(obj);
 	}
 
-	public List<OrdemDeServico> buscarTodos() {
+	public List<OrdemDeServico> findAll() {
 		return repo.findAll();
 	}
 	
-	public void deletarPorId(Integer id) {
+	public void delete(Integer id) {
 		repo.deleteById(id);
 	}
 
-	public List<OrdemDeServico> buscarPorStatus(){
+	public List<OrdemDeServico> findByStatusAprovadas(){
 		if (repo.findAprovadas(2).isEmpty()) {
 			throw new ObjectNotFoundException("Nenhuma Ordem de serviço encontrada com o seguinte parâmetro: APROVADA");
 		}
 		return repo.findAprovadas(2);
+	}
+	
+	public OrdemDeServico update(OrdemDeServico obj) {
+		OrdemDeServico newObj = find(obj.getId());
+		updateData(newObj, obj); 
+		return repo.save(newObj);
+	}
+	
+	private void updateData(OrdemDeServico newObj, OrdemDeServico obj) {
+		newObj.setStatus(obj.getStatus());
+	}
+
+	public OrdemDeServico fromDTO(OrdemDeServicoDTO2 objDto) {
+		return new OrdemDeServico(null, null, null, null, objDto.getStatus());
 	}
 }
