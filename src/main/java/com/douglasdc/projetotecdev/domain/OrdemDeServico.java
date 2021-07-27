@@ -106,4 +106,22 @@ public class OrdemDeServico implements Serializable {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Ordem de serviço número: ");
+		builder.append(getId());
+		builder.append(", Instante: ");
+		builder.append(getInstante());
+		builder.append(", Cliente: ");
+		builder.append(getCliente());
+		builder.append(", Equipamento: ");
+		builder.append(getEquipamento());
+		builder.append(", Status da ordem: ");
+		builder.append(getStatus().getDescricao());
+		return builder.toString();
+	}
+	
+	
 }
