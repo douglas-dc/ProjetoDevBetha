@@ -29,7 +29,7 @@ public class OrdemDeServicoResource {
 
 	@Autowired
 	private OrdemDeServicoService service;
-
+	
 	@GetMapping(value="/{id}")
 	public ResponseEntity<OrdemDeServico> find(@PathVariable Integer id) {
 		OrdemDeServico obj = service.find(id);
@@ -43,6 +43,7 @@ public class OrdemDeServicoResource {
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
+		System.out.println(obj);
 		return ResponseEntity.created(uri).build();
 	}
 
