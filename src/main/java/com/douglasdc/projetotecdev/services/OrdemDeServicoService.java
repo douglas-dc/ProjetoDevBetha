@@ -19,6 +19,9 @@ public class OrdemDeServicoService {
 	@Autowired
 	private OrdemDeServicoRepository repo;
 	
+	@Autowired
+	private EmailService emailService;
+	
 	public OrdemDeServico find(Integer id) {
 		Optional<OrdemDeServico> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
@@ -44,6 +47,7 @@ public class OrdemDeServicoService {
 			if (obj.get().getStatus().getCod() == 0) {
 				obj.get().setStatus(StatusDaOrdemDeServico.AVALIADA);
 				repo.save(obj.get());
+				emailService.sendOrderOrcamento(obj.get());
 				return obj.get();
 			} else if (obj.get().getStatus().getCod() != 1) {
 				throw new DataIntegrityException("Violação de dados. Não é possível alterar o status para o valor desejado.");
@@ -53,12 +57,12 @@ public class OrdemDeServicoService {
 				"Ordem de serviço não encontrada! Id: " + id + ", Tipo: " + OrdemDeServico.class.getName()));
 	}
 
-	public List<OrdemDeServico> findByStatusAprovadas(){
+	/*public List<OrdemDeServico> findByStatusAprovadas(){
 		if (repo.findAprovadas(2).isEmpty()) {
 			throw new ObjectNotFoundException("Nenhuma Ordem de serviço encontrada com o seguinte parâmetro: APROVADA");
 		}
 		return repo.findAprovadas(2);
-	}
+	}*/
 	
 	public OrdemDeServico update(OrdemDeServico obj) {
 		OrdemDeServico newObj = find(obj.getId());
