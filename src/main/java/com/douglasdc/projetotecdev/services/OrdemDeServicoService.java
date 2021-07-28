@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.douglasdc.projetotecdev.domain.OrdemDeServico;
+import com.douglasdc.projetotecdev.domain.enums.StatusDaOrdemDeServico;
 import com.douglasdc.projetotecdev.dto.OrdemDeServicoDTO2;
 import com.douglasdc.projetotecdev.repositories.OrdemDeServicoRepository;
+import com.douglasdc.projetotecdev.services.exceptions.DataIntegrityException;
 import com.douglasdc.projetotecdev.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -34,6 +36,21 @@ public class OrdemDeServicoService {
 	
 	public void delete(Integer id) {
 		repo.deleteById(id);
+	}
+	
+	public OrdemDeServico avaliarOrdem(Integer id) {
+		Optional<OrdemDeServico> obj = repo.findById(id);
+		if (!obj.isEmpty()) {
+			if (obj.get().getStatus().getCod() == 0) {
+				obj.get().setStatus(StatusDaOrdemDeServico.AVALIADA);
+				repo.save(obj.get());
+				return obj.get();
+			} else if (obj.get().getStatus().getCod() != 1) {
+				throw new DataIntegrityException("Violação de dados. Não é possível alterar o status para o valor desejado.");
+			}
+		}
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Ordem de serviço não encontrada! Id: " + id + ", Tipo: " + OrdemDeServico.class.getName()));
 	}
 
 	public List<OrdemDeServico> findByStatusAprovadas(){

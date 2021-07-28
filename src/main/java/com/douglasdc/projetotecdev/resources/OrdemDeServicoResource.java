@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +19,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.douglasdc.projetotecdev.domain.OrdemDeServico;
 import com.douglasdc.projetotecdev.domain.enums.StatusDaOrdemDeServico;
 import com.douglasdc.projetotecdev.dto.OrdemDeServicoDTO;
-import com.douglasdc.projetotecdev.dto.OrdemDeServicoDTO2;
 import com.douglasdc.projetotecdev.services.OrdemDeServicoService;
 
 @RestController
@@ -65,11 +63,18 @@ public class OrdemDeServicoResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	@PutMapping(value="/{id}")
+	@GetMapping(value="/{id}/avaliada")
+	public ResponseEntity<OrdemDeServico> avaliaOrdem(@PathVariable Integer id) {
+		OrdemDeServico obj = service.avaliarOrdem(id);
+		return ResponseEntity.ok().body(obj);
+	}
+	
+	
+	/*@PutMapping(value="/{id}")
 	public ResponseEntity<Void> updateStatus(@RequestBody OrdemDeServicoDTO2 objDto, @PathVariable Integer id) {
 		OrdemDeServico obj = service.fromDTO(objDto);
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
-	}
+	}*/
 }
