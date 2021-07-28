@@ -57,17 +57,17 @@ public class OrdemDeServicoResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	/*@GetMapping(value="/aprovadas")
-	public ResponseEntity<List<OrdemDeServico>> findByStatus() {
-		List<OrdemDeServico> obj = service.findByStatusAprovadas();
-		return ResponseEntity.ok().body(obj);
-	}*/
-	
 	@GetMapping(value="/{id}/avaliada")
 	public ResponseEntity<OrdemDeServico> avaliaOrdem(@PathVariable Integer id) {
 		OrdemDeServico obj = service.avaliarOrdem(id);
 		return ResponseEntity.ok().body(obj);
 	}
+	
+	/*@GetMapping(value="/aprovadas")
+	public ResponseEntity<List<OrdemDeServico>> findByStatus() {
+		List<OrdemDeServico> obj = service.findByStatusAprovadas();
+		return ResponseEntity.ok().body(obj);
+	}*/
 	
 	/*@PutMapping(value="/{id}")
 	public ResponseEntity<Void> updateStatus(@RequestBody OrdemDeServicoDTO2 objDto, @PathVariable Integer id) {
