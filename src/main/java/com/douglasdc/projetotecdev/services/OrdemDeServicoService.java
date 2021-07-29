@@ -3,11 +3,14 @@ package com.douglasdc.projetotecdev.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.douglasdc.projetotecdev.domain.OrdemDeServico;
 import com.douglasdc.projetotecdev.domain.enums.StatusDaOrdemDeServico;
+import com.douglasdc.projetotecdev.dto.OrdemDeServicoDTO;
 import com.douglasdc.projetotecdev.repositories.OrdemDeServicoRepository;
 import com.douglasdc.projetotecdev.services.exceptions.DataIntegrityException;
 import com.douglasdc.projetotecdev.services.exceptions.ObjectNotFoundException;
@@ -51,6 +54,26 @@ public class OrdemDeServicoService {
 		}
 		throw new ObjectNotFoundException("Ordem de serviço não encontrada! Id: " + id + ", Tipo: " + OrdemDeServico.class.getName());
 	}
+
+	public OrdemDeServico fromDTO(@Valid OrdemDeServicoDTO objDto) {
+		return new OrdemDeServico(objDto.getId(), objDto.getInstante(), objDto.getClienteNome(),
+				objDto.getEquipamentoTipo(), objDto.getStatus());
+	}
+
+	public OrdemDeServico update(OrdemDeServico obj) {
+		OrdemDeServico newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
+	}
+
+	private void updateData(OrdemDeServico newObj, OrdemDeServico obj) {
+		newObj.setInstante(obj.getInstante());
+		newObj.setCliente(obj.getCliente());
+		newObj.setEquipamento(obj.getEquipamento());
+		newObj.setStatus(obj.getStatus());
+	}
+	
+	
 	
 	/*public List<OrdemDeServico> findByStatusAprovadas() {
 		if (repo.findAprovadas(2).isEmpty()) {
