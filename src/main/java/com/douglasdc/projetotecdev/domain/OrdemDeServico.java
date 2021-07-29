@@ -119,6 +119,8 @@ public class OrdemDeServico implements Serializable {
 		builder.append(", Equipamento: ");
 		builder.append(getEquipamento());
 		builder.append(", Status da ordem: ");
+		//builder.append("http://localhost:8080/" + getId() + "/aprovado");
+		//builder.append("http://localhost:8080/" + getId() + "/reprovado");
 		builder.append(getStatus().getDescricao());
 		return builder.toString();
 	}

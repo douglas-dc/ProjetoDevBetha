@@ -40,19 +40,10 @@ public class OrdemDeServicoService {
 		repo.deleteById(id);
 	}
 
-	public OrdemDeServico changeToAguardandoCliente(Integer id) {
+	public OrdemDeServico updateStatusToAprovada(Integer id) {
 		OrdemDeServico obj = find(id);
-		if (!obj.equals(null)) {
-			if (obj.getStatus().getCod() == 0) {
-				obj.setStatus(StatusDaOrdemDeServico.AGUARDANDO_CLIENTE);
-				return repo.save(obj);
-			} else if (obj.getStatus().getCod() == 1) {
-				return obj;
-			} else {
-				throw new DataIntegrityException("Violação de dados. Não é possível alterar o status para o valor desejado.");
-			}
-		}
-		throw new ObjectNotFoundException("Ordem de serviço não encontrada! Id: " + id + ", Tipo: " + OrdemDeServico.class.getName());
+		obj.setStatus(StatusDaOrdemDeServico.APROVADA);
+		return repo.save(obj);
 	}
 
 	public OrdemDeServico fromDTO(@Valid OrdemDeServicoDTO objDto) {
@@ -72,13 +63,60 @@ public class OrdemDeServicoService {
 		newObj.setEquipamento(obj.getEquipamento());
 		newObj.setStatus(obj.getStatus());
 	}
+
+	public OrdemDeServico updateStatus(@Valid StatusDaOrdemDeServico status, Integer id) {
+		OrdemDeServico obj = find(id);
+		validarStatus(status, obj);
+		obj.setStatus(status);
+		return repo.save(obj);
+	}
 	
-	
-	
+	public OrdemDeServico validarStatus(StatusDaOrdemDeServico status, OrdemDeServico obj) {
+		if (obj.getStatus().getCod() == 0) {
+			if (status == StatusDaOrdemDeServico.AGUARDANDO_CLIENTE || status == StatusDaOrdemDeServico.PENDENTE) {
+				obj.setStatus(status);
+				return obj;
+			} else {
+				throw new DataIntegrityException("Violação de dados. Não é possível alterar o status para o valor desejado.");
+			}
+		}	
+			
+		if (obj.getStatus().getCod() == 1) {
+			if (status == StatusDaOrdemDeServico.APROVADA || status == StatusDaOrdemDeServico.RECUSADA || 
+					status == StatusDaOrdemDeServico.AGUARDANDO_CLIENTE) {
+				obj.setStatus(status);
+				return obj;
+			} else {
+				throw new DataIntegrityException("Violação de dados. Não é possível alterar o status para o valor desejado.");
+			}
+		}
+		
+		if (obj.getStatus().getCod() == 2 || obj.getStatus().getCod() == 3) {
+			
+		}
+		
+		return null;
+	}
+
 	/*public List<OrdemDeServico> findByStatusAprovadas() {
 		if (repo.findAprovadas(2).isEmpty()) {
 			throw new ObjectNotFoundException("Nenhuma Ordem de serviço encontrada com o seguinte parâmetro: APROVADA");
 		}
 		return repo.findAprovadas(2);
+	}*/
+	
+	/*public OrdemDeServico changeStatusToAguardandoCliente(Integer id) {
+		OrdemDeServico obj = find(id);
+		if (!obj.equals(null)) {
+			if (obj.getStatus().getCod() == 0) {
+				obj.setStatus(StatusDaOrdemDeServico.AGUARDANDO_CLIENTE);
+				return repo.save(obj);
+			} else if (obj.getStatus().getCod() == 1) {
+				return obj;
+			} else {
+				throw new DataIntegrityException("Violação de dados. Não é possível alterar o status para o valor desejado.");
+			}
+		}
+		throw new ObjectNotFoundException("Ordem de serviço não encontrada! Id: " + id + ", Tipo: " + OrdemDeServico.class.getName());
 	}*/
 }

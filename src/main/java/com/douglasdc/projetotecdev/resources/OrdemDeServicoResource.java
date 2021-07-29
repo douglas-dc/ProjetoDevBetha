@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -60,9 +61,9 @@ public class OrdemDeServicoResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@GetMapping(value="/{id}/avaliada")
+	@GetMapping(value="/{id}/aprovada")
 	public ResponseEntity<OrdemDeServico> avaliaOrdem(@PathVariable Integer id) {
-		OrdemDeServico obj = service.changeToAguardandoCliente(id);
+		OrdemDeServico obj = service.updateStatusToAprovada(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
@@ -73,6 +74,13 @@ public class OrdemDeServicoResource {
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@PutMapping(value="/{id}/situacao")
+	public ResponseEntity<Void> update(@Valid @RequestParam(value="status") StatusDaOrdemDeServico status, @PathVariable Integer id) {
+		service.updateStatus(status, id);
+		return ResponseEntity.noContent().build();
+	}
+	
 	
 	/*@GetMapping(value="/aprovadas")
 	public ResponseEntity<List<OrdemDeServico>> findByStatus() {
