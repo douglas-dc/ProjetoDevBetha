@@ -37,11 +37,11 @@ public class OrdemDeServicoService {
 		repo.deleteById(id);
 	}
 
-	public OrdemDeServico avaliarOrdem(Integer id) {
+	public OrdemDeServico changeToAguardandoCliente(Integer id) {
 		OrdemDeServico obj = find(id);
 		if (!obj.equals(null)) {
 			if (obj.getStatus().getCod() == 0) {
-				obj.setStatus(StatusDaOrdemDeServico.AVALIADA);
+				obj.setStatus(StatusDaOrdemDeServico.AGUARDANDO_CLIENTE);
 				return repo.save(obj);
 			} else if (obj.getStatus().getCod() == 1) {
 				return obj;

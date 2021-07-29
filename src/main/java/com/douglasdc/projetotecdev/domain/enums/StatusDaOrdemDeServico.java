@@ -3,9 +3,10 @@ package com.douglasdc.projetotecdev.domain.enums;
 public enum StatusDaOrdemDeServico {
 
 	PENDENTE(0, "Pendente"),
-	AVALIADA(1, "Avaliada"),
+	AGUARDANDO_CLIENTE(1, "Aguardando Cliente"),
 	APROVADA(2, "Aprovada"),
-	RECUSADA(3, "Recusada");
+	RECUSADA(3, "Recusada"),
+	CONCLUIDA(4, "Concluída");
 
 	private int cod;
 	private String descricao;

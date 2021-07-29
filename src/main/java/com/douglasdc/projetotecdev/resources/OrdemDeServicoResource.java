@@ -59,7 +59,7 @@ public class OrdemDeServicoResource {
 	
 	@GetMapping(value="/{id}/avaliada")
 	public ResponseEntity<OrdemDeServico> avaliaOrdem(@PathVariable Integer id) {
-		OrdemDeServico obj = service.avaliarOrdem(id);
+		OrdemDeServico obj = service.changeToAguardandoCliente(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
