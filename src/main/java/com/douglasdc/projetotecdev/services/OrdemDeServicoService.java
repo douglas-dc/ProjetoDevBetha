@@ -67,13 +67,13 @@ public class OrdemDeServicoService {
 	public OrdemDeServico updateStatus(@Valid StatusDaOrdemDeServico status, Integer id) {
 		OrdemDeServico obj = find(id);
 		validarStatus(status, obj);
-		obj.setStatus(status);
 		return repo.save(obj);
 	}
 	
 	public OrdemDeServico validarStatus(StatusDaOrdemDeServico status, OrdemDeServico obj) {
-		if (obj.getStatus().getCod() == 0) {
-			if (status == StatusDaOrdemDeServico.AGUARDANDO_CLIENTE || status == StatusDaOrdemDeServico.PENDENTE) {
+		if (obj.getStatus() == StatusDaOrdemDeServico.PENDENTE) {
+			if (status == StatusDaOrdemDeServico.AGUARDANDO_CLIENTE || status == StatusDaOrdemDeServico.PENDENTE ||
+					status == StatusDaOrdemDeServico.CONCLUIDA) {
 				obj.setStatus(status);
 				return obj;
 			} else {
@@ -81,9 +81,9 @@ public class OrdemDeServicoService {
 			}
 		}	
 			
-		if (obj.getStatus().getCod() == 1) {
+		if (obj.getStatus() == StatusDaOrdemDeServico.AGUARDANDO_CLIENTE) {
 			if (status == StatusDaOrdemDeServico.APROVADA || status == StatusDaOrdemDeServico.RECUSADA || 
-					status == StatusDaOrdemDeServico.AGUARDANDO_CLIENTE) {
+					status == StatusDaOrdemDeServico.AGUARDANDO_CLIENTE || status == StatusDaOrdemDeServico.CONCLUIDA) {
 				obj.setStatus(status);
 				return obj;
 			} else {
@@ -91,11 +91,22 @@ public class OrdemDeServicoService {
 			}
 		}
 		
-		if (obj.getStatus().getCod() == 2 || obj.getStatus().getCod() == 3) {
-			
+		if (obj.getStatus() == StatusDaOrdemDeServico.APROVADA || obj.getStatus() == StatusDaOrdemDeServico.RECUSADA) {
+			if (status == StatusDaOrdemDeServico.CONCLUIDA || status == StatusDaOrdemDeServico.APROVADA ||
+					status == StatusDaOrdemDeServico.RECUSADA) {
+				obj.setStatus(status);
+				return obj;
+			} else {
+				throw new DataIntegrityException("Violação de dados. Não é possível alterar o status para o valor desejado.");
+			} 
 		}
 		
-		return null;
+		if (obj.getStatus() == StatusDaOrdemDeServico.CONCLUIDA) {
+			obj.setStatus(status);
+			return obj;
+		} else {
+			throw new DataIntegrityException("Violação de dados. Não é possível alterar o status para o valor desejado.");
+		} 
 	}
 
 	/*public List<OrdemDeServico> findByStatusAprovadas() {
