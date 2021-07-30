@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.douglasdc.projetotecdev.domain.OrdemDeServico;
@@ -85,6 +86,12 @@ public class OrdemDeServicoResource {
 	public ResponseEntity<OrdemDeServico> setStatusRecusada(@PathVariable Integer id) {
 		OrdemDeServico obj = service.updateStatusToRecusada(id);
 		return ResponseEntity.ok().body(obj);
+	}
+	
+	@PostMapping(value="/{id}/avarias")
+	public ResponseEntity<Void> insert(@RequestParam(name="file") MultipartFile file, @PathVariable Integer id) {
+		URI uri = service.uploadAvariaImage(file, id);
+		return ResponseEntity.created(uri).build();
 	}
 	
 	

@@ -1,5 +1,6 @@
 package com.douglasdc.projetotecdev.services;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.douglasdc.projetotecdev.domain.OrdemDeServico;
 import com.douglasdc.projetotecdev.domain.enums.StatusDaOrdemDeServico;
@@ -20,6 +22,12 @@ public class OrdemDeServicoService {
 
 	@Autowired
 	private OrdemDeServicoRepository repo;
+	
+	@Autowired
+	private EmailService emailService;
+	
+	@Autowired
+	private S3Service s3Service;
 	
 	public OrdemDeServico find(Integer id) {
 		Optional<OrdemDeServico> obj = repo.findById(id);
@@ -61,6 +69,9 @@ public class OrdemDeServicoService {
 	public OrdemDeServico updateStatus(@Valid StatusDaOrdemDeServico status, Integer id) {
 		OrdemDeServico obj = find(id);
 		validarStatus(status, obj);
+		if (obj.getStatus() == StatusDaOrdemDeServico.AGUARDANDO_CLIENTE) {
+			emailService.sendOrderOrcamento(obj);
+		}
 		return repo.save(obj);
 	}
 	
@@ -113,6 +124,14 @@ public class OrdemDeServicoService {
 		OrdemDeServico obj = find(id);
 		obj.setStatus(StatusDaOrdemDeServico.RECUSADA);
 		return repo.save(obj);
+	}
+	
+	public URI uploadAvariaImage(MultipartFile multipartFile, Integer id) {
+		URI uri =	s3Service.uploadFile(multipartFile);
+		OrdemDeServico obj = find(id);
+		obj.setImageUrl(uri.toString());		
+		repo.save(obj);
+		return uri;
 	}
 
 	/*public List<OrdemDeServico> findByStatusAprovadas() {

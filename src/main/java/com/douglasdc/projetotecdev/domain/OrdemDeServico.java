@@ -29,6 +29,8 @@ public class OrdemDeServico implements Serializable {
 	
 	private Integer status;
 	
+	private String imageUrl;
+	
 	public OrdemDeServico() {
 		
 	}
@@ -82,6 +84,14 @@ public class OrdemDeServico implements Serializable {
 		this.status = status.getCod();
 	}
 	
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -112,16 +122,15 @@ public class OrdemDeServico implements Serializable {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Ordem de serviço número: ");
 		builder.append(getId());
-		builder.append(", Instante: ");
+		builder.append(", Data: ");
 		builder.append(getInstante());
 		builder.append(", Cliente: ");
 		builder.append(getCliente());
 		builder.append(", Equipamento: ");
 		builder.append(getEquipamento());
-		builder.append(", Status da ordem: ");
-		//builder.append("http://localhost:8080/" + getId() + "/aprovado");
-		//builder.append("http://localhost:8080/" + getId() + "/reprovado");
-		builder.append(getStatus().getDescricao());
+		builder.append("Deseja confirmar a realização do serviço?");
+		//builder.append("http://localhost:8080/" + getId() + "/aprovada");
+		//builder.append(" http://localhost:8080/" + getId() + "/reprovada");
 		return builder.toString();
 	}
 	
