@@ -39,13 +39,7 @@ public class OrdemDeServicoService {
 	public void delete(Integer id) {
 		repo.deleteById(id);
 	}
-
-	public OrdemDeServico updateStatusToAprovada(Integer id) {
-		OrdemDeServico obj = find(id);
-		obj.setStatus(StatusDaOrdemDeServico.APROVADA);
-		return repo.save(obj);
-	}
-
+	
 	public OrdemDeServico fromDTO(@Valid OrdemDeServicoDTO objDto) {
 		return new OrdemDeServico(objDto.getId(), objDto.getInstante(), objDto.getClienteNome(),
 				objDto.getEquipamentoTipo(), objDto.getStatus());
@@ -107,6 +101,18 @@ public class OrdemDeServicoService {
 		} else {
 			throw new DataIntegrityException("Violação de dados. Não é possível alterar o status para o valor desejado.");
 		} 
+	}
+	
+	public OrdemDeServico updateStatusToAprovada(Integer id) {
+		OrdemDeServico obj = find(id);
+		obj.setStatus(StatusDaOrdemDeServico.APROVADA);
+		return repo.save(obj);
+	}
+	
+	public OrdemDeServico updateStatusToRecusada(Integer id) {
+		OrdemDeServico obj = find(id);
+		obj.setStatus(StatusDaOrdemDeServico.RECUSADA);
+		return repo.save(obj);
 	}
 
 	/*public List<OrdemDeServico> findByStatusAprovadas() {
