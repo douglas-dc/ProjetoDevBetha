@@ -128,11 +128,9 @@ public class OrdemDeServico implements Serializable {
 		builder.append(getCliente());
 		builder.append(", Equipamento: ");
 		builder.append(getEquipamento());
-		builder.append("Deseja confirmar a realização do serviço?");
-		//builder.append("http://localhost:8080/" + getId() + "/aprovada");
-		//builder.append(" http://localhost:8080/" + getId() + "/reprovada");
+		builder.append("Deseja confirmar a realização do serviço? ");
+		builder.append("http://localhost:8080/ordens/" + getId() + "/aprovada");
+		builder.append(" http://localhost:8080/ordens/" + getId() + "/recusada");
 		return builder.toString();
 	}
-	
-	
 }
