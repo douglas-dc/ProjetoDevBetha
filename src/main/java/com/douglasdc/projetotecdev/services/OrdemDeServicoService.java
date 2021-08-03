@@ -124,13 +124,13 @@ public class OrdemDeServicoService {
 	
 	public OrdemDeServico updateStatusToAprovada(Integer id) {
 		OrdemDeServico obj = find(id);
-		obj.setStatus(StatusDaOrdemDeServico.APROVADA);
+		validarStatus(StatusDaOrdemDeServico.APROVADA, obj);
 		return repo.save(obj);
 	}
 	
 	public OrdemDeServico updateStatusToRecusada(Integer id) {
 		OrdemDeServico obj = find(id);
-		obj.setStatus(StatusDaOrdemDeServico.RECUSADA);
+		validarStatus(StatusDaOrdemDeServico.RECUSADA, obj);
 		return repo.save(obj);
 	}
 	
