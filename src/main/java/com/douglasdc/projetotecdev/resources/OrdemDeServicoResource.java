@@ -76,13 +76,13 @@ public class OrdemDeServicoResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@GetMapping(value="/{id}/aprovada")
+	@PutMapping(value="/{id}/aprovada")
 	public ResponseEntity<OrdemDeServico> setStatusAprovada(@PathVariable Integer id) {
 		OrdemDeServico obj = service.updateStatusToAprovada(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	@GetMapping(value="/{id}/recusada")
+	@PutMapping(value="/{id}/recusada")
 	public ResponseEntity<OrdemDeServico> setStatusRecusada(@PathVariable Integer id) {
 		OrdemDeServico obj = service.updateStatusToRecusada(id);
 		return ResponseEntity.ok().body(obj);
