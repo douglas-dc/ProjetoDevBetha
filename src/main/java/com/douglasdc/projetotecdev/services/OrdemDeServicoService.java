@@ -86,7 +86,7 @@ public class OrdemDeServicoService {
 		OrdemDeServico obj = find(id);
 		validarStatus(status, obj);
 		if (obj.getStatus() == StatusDaOrdemDeServico.AGUARDANDO_CLIENTE) {
-			emailService.sendOrderOrcamento(obj);
+			emailService.sendOrderConfirmationHtmlEmail(obj);
 		}
 		return repo.save(obj);
 	}
@@ -147,7 +147,6 @@ public class OrdemDeServicoService {
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
 		String fileName = prefixName + obj.getId() + ".jpg";
 		obj.setImageName(fileName);
-		System.out.println(prefixUrl);
 		repo.save(obj);
 		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
 	}
