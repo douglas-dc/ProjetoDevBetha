@@ -15,27 +15,28 @@ import com.douglasdc.projetotecdev.domain.enums.StatusDaOrdemDeServico;
 @Entity
 public class OrdemDeServico implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	private LocalDate instante;
-	
-	//@OneToOne(cascade=CascadeType.ALL, mappedBy="ordemDeServico")
+
+	// @OneToOne(cascade=CascadeType.ALL, mappedBy="ordemDeServico")
 	private String equipamento;
-	
+
 	private String cliente;
-	
+
 	private Integer status;
-	
-	private String imageUrl;
-	
+
+	private String imageName;
+
 	public OrdemDeServico() {
-		
+
 	}
 
-	public OrdemDeServico(Integer id, LocalDate instante, String equipamento, String cliente, StatusDaOrdemDeServico status) {
+	public OrdemDeServico(Integer id, LocalDate instante, String equipamento, String cliente,
+			StatusDaOrdemDeServico status) {
 		super();
 		this.id = id;
 		this.instante = instante;
@@ -59,7 +60,7 @@ public class OrdemDeServico implements Serializable {
 	public void setInstante(LocalDate instante) {
 		this.instante = instante;
 	}
-	
+
 	public String getEquipamento() {
 		return equipamento;
 	}
@@ -75,7 +76,7 @@ public class OrdemDeServico implements Serializable {
 	public void setCliente(String cliente) {
 		this.cliente = cliente;
 	}
-	
+
 	public StatusDaOrdemDeServico getStatus() {
 		return StatusDaOrdemDeServico.toEnum(status);
 	}
@@ -83,13 +84,13 @@ public class OrdemDeServico implements Serializable {
 	public void setStatus(StatusDaOrdemDeServico status) {
 		this.status = status.getCod();
 	}
-	
-	public String getImageUrl() {
-		return imageUrl;
+
+	public String getImageName() {
+		return imageName;
 	}
 
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
 	}
 
 	@Override

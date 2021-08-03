@@ -3,7 +3,6 @@ package com.douglasdc.projetotecdev.services;
 import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -34,13 +33,22 @@ public class OrdemDeServicoService {
 	@Autowired
 	private ImageService imageService;
 	
-	@Value("${img.prefix}")
-	private String prefix;
+	@Value("${img.prefix.name}")
+	private String prefixName;
+	
+	@Value("${img.prefix.url}")
+	private String prefixUrl;
+	
+//	public OrdemDeServico find(Integer id) {
+//		Optional<OrdemDeServico> obj = repo.findById(id);
+//		return obj.orElseThrow(() -> new ObjectNotFoundException(
+//				"Ordem de serviço não encontrada! Id: " + id + ", Tipo: " + OrdemDeServico.class.getName()));
+//	}
 	
 	public OrdemDeServico find(Integer id) {
-		Optional<OrdemDeServico> obj = repo.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Ordem de serviço não encontrada! Id: " + id + ", Tipo: " + OrdemDeServico.class.getName()));
+		OrdemDeServico obj = repo.findById(id).orElseThrow(() -> new ObjectNotFoundException("não achou"));
+		obj.setImageName(prefixUrl + obj.getImageName());
+		return obj;
 	}
 
 	public OrdemDeServico insert(OrdemDeServico obj) {
@@ -137,8 +145,9 @@ public class OrdemDeServicoService {
 	public URI uploadAvariaImage(MultipartFile multipartFile, Integer id) {
 		OrdemDeServico obj = find(id);
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
-		String fileName = prefix + obj.getId() + ".jpg";
-		obj.setImageUrl(fileName);
+		String fileName = prefixName + obj.getId() + ".jpg";
+		obj.setImageName(fileName);
+		System.out.println(prefixUrl);
 		repo.save(obj);
 		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
 	}
