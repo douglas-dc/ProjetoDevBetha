@@ -3,12 +3,12 @@ package com.douglasdc.projetotecdev.domain;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-//import javax.persistence.CascadeType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-//import javax.persistence.OneToOne;
+import javax.persistence.OneToOne;
 
 import com.douglasdc.projetotecdev.domain.enums.StatusDaOrdemDeServico;
 
@@ -22,8 +22,8 @@ public class OrdemDeServico implements Serializable {
 	
 	private LocalDate instante;
 
-	// @OneToOne(cascade=CascadeType.ALL, mappedBy="ordemDeServico")
-	private String equipamento;
+	@OneToOne(cascade=CascadeType.ALL, mappedBy="ordemDeServico")
+	private Equipamento equipamento;
 
 	private String cliente;
 
@@ -35,12 +35,10 @@ public class OrdemDeServico implements Serializable {
 
 	}
 
-	public OrdemDeServico(Integer id, LocalDate instante, String equipamento, String cliente,
-			StatusDaOrdemDeServico status) {
+	public OrdemDeServico(Integer id, LocalDate instante, String cliente, StatusDaOrdemDeServico status) {
 		super();
 		this.id = id;
 		this.instante = instante;
-		this.equipamento = equipamento;
 		this.cliente = cliente;
 		this.status = (status == null) ? null : status.getCod();
 	}
@@ -61,11 +59,11 @@ public class OrdemDeServico implements Serializable {
 		this.instante = instante;
 	}
 
-	public String getEquipamento() {
+	public Equipamento getEquipamento() {
 		return equipamento;
 	}
 
-	public void setEquipamento(String equipamento) {
+	public void setEquipamento(Equipamento equipamento) {
 		this.equipamento = equipamento;
 	}
 
@@ -128,7 +126,7 @@ public class OrdemDeServico implements Serializable {
 		builder.append(", Cliente: ");
 		builder.append(getCliente());
 		builder.append(", Equipamento: ");
-		builder.append(getEquipamento());
+		//builder.append(getEquipamento());
 		builder.append("Deseja confirmar a realização do serviço? ");
 		builder.append("http://localhost:8080/ordens/" + getId() + "/aprovada");
 		builder.append(" http://localhost:8080/ordens/" + getId() + "/recusada");

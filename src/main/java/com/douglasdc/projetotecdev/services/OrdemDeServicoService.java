@@ -46,7 +46,8 @@ public class OrdemDeServicoService {
 //	}
 	
 	public OrdemDeServico find(Integer id) {
-		OrdemDeServico obj = repo.findById(id).orElseThrow(() -> new ObjectNotFoundException("não achou"));
+		OrdemDeServico obj = repo.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+				"Ordem de serviço não encontrada! Id: " + id + ", Tipo: " + OrdemDeServico.class.getName()));
 		obj.setImageName(prefixUrl + obj.getImageName());
 		return obj;
 	}
@@ -65,8 +66,7 @@ public class OrdemDeServicoService {
 	}
 	
 	public OrdemDeServico fromDTO(@Valid OrdemDeServicoDTO objDto) {
-		return new OrdemDeServico(objDto.getId(), objDto.getInstante(), objDto.getClienteNome(),
-				objDto.getEquipamentoTipo(), objDto.getStatus());
+		return new OrdemDeServico(objDto.getId(), objDto.getInstante(), objDto.getClienteNome(), objDto.getStatus());
 	}
 
 	public OrdemDeServico update(OrdemDeServico obj) {

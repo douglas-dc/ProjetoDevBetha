@@ -23,7 +23,7 @@ public class OrdemDeServicoDTO implements Serializable {
 		id = ordem.getId();
 		instante = ordem.getInstante();
 		status = ordem.getStatus().getCod();
-		equipamentoTipo = ordem.getEquipamento();
+		equipamentoTipo = ordem.getEquipamento().getTipo();
 		clienteNome = ordem.getCliente();
 	}
 	
