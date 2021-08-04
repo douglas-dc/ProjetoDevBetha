@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<title th:remove="all">Order Confirmation</title>
+		<title th:remove="all">Confirmação de Ordem</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	</head>
 	<body>
@@ -11,7 +11,7 @@
 			</h1>
 			<p>
 				Instante: <span
-					th:text="${#dates.format(ordemdeservico.instante, 'dd/MM/yyyy hh:mm')}"></span>
+					th:text="${ordemdeservico.instante}"></span>
 			</p>
 			<p>
 				Cliente: <span th:text="${ordemdeservico.cliente}"></span>
