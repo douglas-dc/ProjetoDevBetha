@@ -22,16 +22,12 @@
 			<p>
 				Deseja aprovar a ordem de serviço?
 			</p>
-			<form action th:text="${osAprovadaUrl}" method="GET">
-				<div class="button">
-					<button type="submit">Aprovar</button>
-				</div>
+			<form th:action="${osAprovadaUrl}" method="POST">
+				<button type="submit">Aprovar</button>
 			</form>
 
-			<form action th:text="${osReprovadaUrl}" method="GET">
-				<div class="button">
-					<button type="submit">Reprovar</button>
-				</div>
+			<form th:action="${osReprovadaUrl}" method="POST">
+				<button type="submit">Reprovar</button>
 			</form>
 		</div>
 	</body>
