@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,9 +34,13 @@ public class OrdemDeServicoResource {
 	@Autowired
 	private OrdemDeServicoService service;
 	
+	@Value("${img.prefix.url}")
+	private String prefixUrl;
+	
 	@GetMapping(value="/{id}")
 	public ResponseEntity<OrdemDeServico> find(@PathVariable Integer id) {
 		OrdemDeServico obj = service.find(id);
+		obj.setImageName(prefixUrl + obj.getImageName());
 		return ResponseEntity.ok().body(obj);
 	}
 
@@ -76,16 +81,16 @@ public class OrdemDeServicoResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PutMapping(value="/{id}/aprovada")
+	@PostMapping(value="/{id}/aprovada")
 	public ResponseEntity<OrdemDeServico> setStatusAprovada(@PathVariable Integer id) {
-		OrdemDeServico obj = service.updateStatusToAprovada(id);
-		return ResponseEntity.ok().body(obj);
+		service.updateStatusToAprovada(id);
+		return ResponseEntity.noContent().build();
 	}
-	
-	@PutMapping(value="/{id}/recusada")
+
+	@PostMapping(value="/{id}/recusada")
 	public ResponseEntity<OrdemDeServico> setStatusRecusada(@PathVariable Integer id) {
-		OrdemDeServico obj = service.updateStatusToRecusada(id);
-		return ResponseEntity.ok().body(obj);
+		service.updateStatusToRecusada(id);
+		return ResponseEntity.noContent().build();
 	}
 	
 	@PostMapping(value="/{id}/avarias")

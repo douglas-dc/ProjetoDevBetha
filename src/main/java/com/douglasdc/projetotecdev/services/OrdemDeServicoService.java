@@ -52,7 +52,6 @@ public class OrdemDeServicoService {
 	public OrdemDeServico find(Integer id) {
 		OrdemDeServico obj = repo.findById(id).orElseThrow(() -> new ObjectNotFoundException(
 				"Ordem de serviço não encontrada! Id: " + id + ", Tipo: " + OrdemDeServico.class.getName()));
-		obj.setImageName(prefixUrl + obj.getImageName());
 		return obj;
 	}
 

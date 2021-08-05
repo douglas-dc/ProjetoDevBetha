@@ -45,8 +45,8 @@ public abstract class AbstractEmailService implements EmailService{
 	protected String htmlFromTemplateOrdemDeServico(OrdemDeServico obj) {
 		Context context = new Context();
 		context.setVariable("ordemdeservico", obj);
-		context.setVariable("osAprovadaUrl", "http://localhost:8080/" + obj.getId() + "/aprovada");
-		context.setVariable("osReprovadaUrl", "http://localhost:8080/" + obj.getId() + "/reprovada");
+		context.setVariable("osAprovadaUrl", "http://localhost:8080/ordens/" + obj.getId() + "/aprovada");
+		context.setVariable("osReprovadaUrl", "http://localhost:8080/ordens/" + obj.getId() + "/reprovada");
 		System.out.println(templateEngine.process("email/confirmacaoDeOrdem", context));
 		return templateEngine.process("email/confirmacaoDeOrdem", context);
 	}
