@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.douglasdc.projetotecdev.domain.OrdemDeServico;
 import com.douglasdc.projetotecdev.domain.enums.StatusDaOrdemDeServico;
 import com.douglasdc.projetotecdev.dto.OrdemDeServicoDTO;
+import com.douglasdc.projetotecdev.repositories.EquipamentoRepository;
 import com.douglasdc.projetotecdev.repositories.OrdemDeServicoRepository;
 import com.douglasdc.projetotecdev.services.exceptions.DataIntegrityException;
 import com.douglasdc.projetotecdev.services.exceptions.ObjectNotFoundException;
@@ -32,6 +33,9 @@ public class OrdemDeServicoService {
 	
 	@Autowired
 	private ImageService imageService;
+	
+	@Autowired
+	private EquipamentoRepository equipamentoRepository;
 	
 	@Value("${img.prefix.name}")
 	private String prefixName;
@@ -54,7 +58,10 @@ public class OrdemDeServicoService {
 
 	public OrdemDeServico insert(OrdemDeServico obj) {
 		obj.setId(null);
-		return repo.save(obj);
+		obj.getEquipamento().setOrdemDeServico(obj);
+		obj = repo.save(obj);
+		equipamentoRepository.save(obj.getEquipamento());
+		return obj;
 	}
 
 	public List<OrdemDeServico> findAll() {
