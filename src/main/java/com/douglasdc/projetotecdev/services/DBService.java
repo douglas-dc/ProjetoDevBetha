@@ -6,9 +6,11 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.douglasdc.projetotecdev.domain.Cliente;
 import com.douglasdc.projetotecdev.domain.Equipamento;
 import com.douglasdc.projetotecdev.domain.OrdemDeServico;
 import com.douglasdc.projetotecdev.domain.enums.StatusDaOrdemDeServico;
+import com.douglasdc.projetotecdev.repositories.ClienteRepository;
 import com.douglasdc.projetotecdev.repositories.EquipamentoRepository;
 import com.douglasdc.projetotecdev.repositories.OrdemDeServicoRepository;
 
@@ -21,12 +23,22 @@ public class DBService {
 	@Autowired
 	private EquipamentoRepository equipamentoRepository;
 	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
 	public void instantiateTestDatabase() {
 		
-		OrdemDeServico os1 = new OrdemDeServico(null, LocalDate.now(), "Marcos", StatusDaOrdemDeServico.PENDENTE);
-		OrdemDeServico os2 = new OrdemDeServico(null, LocalDate.parse("2021-04-15"), "Joana", StatusDaOrdemDeServico.AGUARDANDO_CLIENTE);
-		OrdemDeServico os3 = new OrdemDeServico(null, LocalDate.parse("2021-02-11"), "Pedro", StatusDaOrdemDeServico.APROVADA);
-		OrdemDeServico os4 = new OrdemDeServico(null, LocalDate.parse("2021-06-28"), "Stefany", StatusDaOrdemDeServico.RECUSADA);
+		Cliente cli1 = new Cliente(null, "Pablo", "Rua Conceição, número 30", "pablo@gmail.com", "9999-8888");
+		Cliente cli2 = new Cliente(null, "Joana", "Rua Graça, número 95", "joana@gmail.com", "9999-7777");
+		Cliente cli3 = new Cliente(null, "Fabrícia", "Avenida Pinheiros, número 101", "fabricia@gmail.com", "9999-6666");
+		Cliente cli4 = new Cliente(null, "Jackinho", "Rua Acácia, número 52", "jackinho@gmail.com", "9999-5555");
+		
+		clienteRepository.saveAll(Arrays.asList(cli1, cli2, cli3, cli4));
+		
+		OrdemDeServico os1 = new OrdemDeServico(null, LocalDate.now(), cli1, StatusDaOrdemDeServico.PENDENTE);
+		OrdemDeServico os2 = new OrdemDeServico(null, LocalDate.parse("2021-04-15"), cli2, StatusDaOrdemDeServico.AGUARDANDO_CLIENTE);
+		OrdemDeServico os3 = new OrdemDeServico(null, LocalDate.parse("2021-02-11"), cli3, StatusDaOrdemDeServico.APROVADA);
+		OrdemDeServico os4 = new OrdemDeServico(null, LocalDate.parse("2021-06-28"), cli4, StatusDaOrdemDeServico.RECUSADA);
 		
 		Equipamento equip1 = new Equipamento(null, "Celular", "Tela quebrada", os1);
 		os1.setEquipamento(equip1);

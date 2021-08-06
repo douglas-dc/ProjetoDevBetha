@@ -40,7 +40,7 @@ public abstract class AbstractEmailService implements EmailService{
 
 	protected SimpleMailMessage prepareSimpleMailMessageFromOrdemDeServico(OrdemDeServico obj) {
 		SimpleMailMessage sm = new SimpleMailMessage();
-		sm.setTo(obj.getCliente());
+		sm.setTo(obj.getCliente().getEmail());
 		sm.setFrom(sender);
 		sm.setSubject("Requisição de Serviço" + obj.getId());
 		sm.setSentDate(new Date(System.currentTimeMillis()));
@@ -50,7 +50,7 @@ public abstract class AbstractEmailService implements EmailService{
 	
 	protected SimpleMailMessage prepareSimpleMailMessageFromOrdemDeServicoConclusion(OrdemDeServico obj) {
 		SimpleMailMessage sm = new SimpleMailMessage();
-		sm.setTo(obj.getCliente());
+		sm.setTo(obj.getCliente().getEmail());
 		sm.setFrom(sender);
 		sm.setSubject("Ordem de Serviço Finalizada" + obj.getId());
 		sm.setSentDate(new Date(System.currentTimeMillis()));
@@ -99,7 +99,7 @@ public abstract class AbstractEmailService implements EmailService{
 	protected MimeMessage prepareMimeMailMessageFromOrdemDeServico(OrdemDeServico obj) throws MessagingException {
 		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 		MimeMessageHelper mmh = new MimeMessageHelper(mimeMessage, true);
-		mmh.setTo(obj.getCliente());
+		mmh.setTo(obj.getCliente().getEmail());
 		mmh.setFrom(sender);
 		mmh.setSubject("Ordem enviada!");
 		mmh.setSentDate(new Date(System.currentTimeMillis()));
@@ -110,7 +110,7 @@ public abstract class AbstractEmailService implements EmailService{
 	protected MimeMessage prepareMimeMailMessageFromOrdemDeServicoConclusion(OrdemDeServico obj) throws MessagingException {
 		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 		MimeMessageHelper mmh = new MimeMessageHelper(mimeMessage, true);
-		mmh.setTo(obj.getCliente());
+		mmh.setTo(obj.getCliente().getEmail());
 		mmh.setFrom(sender);
 		mmh.setSubject("Ordem de serviço finalizada!" + obj.getId());
 		mmh.setSentDate(new Date(System.currentTimeMillis()));

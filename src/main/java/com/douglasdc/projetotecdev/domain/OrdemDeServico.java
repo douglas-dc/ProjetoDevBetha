@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.douglasdc.projetotecdev.domain.enums.StatusDaOrdemDeServico;
@@ -25,7 +27,9 @@ public class OrdemDeServico implements Serializable {
 	@OneToOne(cascade=CascadeType.ALL, mappedBy="ordemDeServico")
 	private Equipamento equipamento;
 
-	private String cliente;
+	@ManyToOne
+	@JoinColumn(name="cliente_id")
+	private Cliente cliente;
 
 	private Integer status;
 
@@ -35,11 +39,19 @@ public class OrdemDeServico implements Serializable {
 
 	}
 
-	public OrdemDeServico(Integer id, LocalDate instante, String cliente, StatusDaOrdemDeServico status) {
+	public OrdemDeServico(Integer id, LocalDate instante, Cliente cliente, StatusDaOrdemDeServico status) {
 		super();
 		this.id = id;
 		this.instante = instante;
 		this.cliente = cliente;
+		this.status = (status == null) ? null : status.getCod();
+	}
+	
+	public OrdemDeServico(Integer id, LocalDate instante, String clienteNome, StatusDaOrdemDeServico status) {
+		super();
+		this.id = id;
+		this.instante = instante;
+		this.cliente.setNome(clienteNome);
 		this.status = (status == null) ? null : status.getCod();
 	}
 
@@ -67,11 +79,11 @@ public class OrdemDeServico implements Serializable {
 		this.equipamento = equipamento;
 	}
 
-	public String getCliente() {
+	public Cliente getCliente() {
 		return cliente;
 	}
 
-	public void setCliente(String cliente) {
+	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
 
