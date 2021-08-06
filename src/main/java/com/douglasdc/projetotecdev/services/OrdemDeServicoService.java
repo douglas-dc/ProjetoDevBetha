@@ -85,7 +85,6 @@ public class OrdemDeServicoService {
 		newObj.setInstante(obj.getInstante());
 		newObj.setCliente(obj.getCliente());
 		newObj.setEquipamento(obj.getEquipamento());
-		newObj.setStatus(obj.getStatus());
 	}
 
 	public OrdemDeServico updateStatus(@Valid StatusDaOrdemDeServico status, Integer id) {
@@ -93,6 +92,9 @@ public class OrdemDeServicoService {
 		validarStatus(status, obj);
 		if (obj.getStatus() == StatusDaOrdemDeServico.AGUARDANDO_CLIENTE) {
 			emailService.sendOrderConfirmationHtmlEmail(obj);
+		}
+		if (obj.getStatus() == StatusDaOrdemDeServico.CONCLUIDA) {
+			emailService.sendOrderConclusionHtmlEmail(obj);
 		}
 		return repo.save(obj);
 	}
