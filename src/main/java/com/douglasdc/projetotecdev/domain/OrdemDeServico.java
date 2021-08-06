@@ -26,7 +26,7 @@ public class OrdemDeServico implements Serializable {
 
 	@OneToOne(cascade=CascadeType.ALL, mappedBy="ordemDeServico")
 	private Equipamento equipamento;
-
+	
 	@ManyToOne
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
