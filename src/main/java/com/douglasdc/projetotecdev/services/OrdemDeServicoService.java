@@ -37,6 +37,9 @@ public class OrdemDeServicoService {
 	@Autowired
 	private EquipamentoRepository equipamentoRepository;
 	
+	@Autowired
+	private ClienteService clienteService;
+	
 	@Value("${img.prefix.name}")
 	private String prefixName;
 	
@@ -58,6 +61,7 @@ public class OrdemDeServicoService {
 	public OrdemDeServico insert(OrdemDeServico obj) {
 		obj.setId(null);
 		obj.getEquipamento().setOrdemDeServico(obj);
+		obj.setCliente(clienteService.find(obj.getCliente().getId()));
 		obj = repo.save(obj);
 		equipamentoRepository.save(obj.getEquipamento());
 		return obj;
