@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<title th:remove="all">Confirmação de Ordem</title>
+		<title th:remove="all">Ordem Finalizada</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	</head>
 	<body>
@@ -23,15 +23,8 @@
 				Descrição do problema:<span th:text="${ordemdeservico.equipamento.descricao}"></span>
 			</p>
 			<p>
-				Deseja aprovar a ordem de serviço?
+				Informamos que a Ordem de Serviço acima foi concluída. Para outras informações entre em contato.
 			</p>
-			<form th:action="${osAprovadaUrl}" method="POST">
-				<button type="submit">Aprovar</button>
-			</form>
-
-			<form th:action="${osRecusadaUrl}" method="POST">
-				<button type="submit">Reprovar</button>
-			</form>
 		</div>
 	</body>
 </html> 

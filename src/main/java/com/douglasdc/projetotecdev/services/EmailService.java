@@ -8,12 +8,16 @@ import com.douglasdc.projetotecdev.domain.OrdemDeServico;
 
 public interface EmailService {
 	
-	void sendOrderOrcamento(OrdemDeServico obj);
+	void sendOrderConfirmation(OrdemDeServico obj);
 
 	void sendEmail(SimpleMailMessage msg) ;
 	
 	void sendHtmlEmail(MimeMessage msg);
 	
 	void sendOrderConfirmationHtmlEmail(OrdemDeServico obj);
+
+	void sendOrderConclusionHtmlEmail(OrdemDeServico obj);
+	
+	void sendOrderConclusion(OrdemDeServico obj);
 	
 }
