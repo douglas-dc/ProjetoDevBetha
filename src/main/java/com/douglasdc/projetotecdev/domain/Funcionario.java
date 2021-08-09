@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.douglasdc.projetotecdev.domain.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -24,17 +25,20 @@ public class Funcionario implements Serializable {
 	
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String senha;
-
+	
+	private Integer perfil;
+	
 	public Funcionario() {
 		
 	}
 	
-	public Funcionario(Integer id, String nome, String email, String senha) {
+	public Funcionario(Integer id, String nome, String email, String senha, Perfil perfil) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
+		this.perfil = (perfil == null) ? null : perfil.getCod();
 	}
 
 	public Integer getId() {
@@ -69,6 +73,18 @@ public class Funcionario implements Serializable {
 		this.senha = senha;
 	}
 
+	public Perfil getPerfil() {
+		return Perfil.toEnum(perfil);
+	}
+
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil.getCod();
+	}
+	
+//	public void addPerfil(Perfil perfil) {
+//		perfis.add(perfil.getCod());
+//	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -93,5 +109,4 @@ public class Funcionario implements Serializable {
 			return false;
 		return true;
 	}
-	
 }

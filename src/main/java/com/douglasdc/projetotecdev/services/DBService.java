@@ -11,6 +11,7 @@ import com.douglasdc.projetotecdev.domain.Cliente;
 import com.douglasdc.projetotecdev.domain.Equipamento;
 import com.douglasdc.projetotecdev.domain.Funcionario;
 import com.douglasdc.projetotecdev.domain.OrdemDeServico;
+import com.douglasdc.projetotecdev.domain.enums.Perfil;
 import com.douglasdc.projetotecdev.domain.enums.StatusDaOrdemDeServico;
 import com.douglasdc.projetotecdev.repositories.ClienteRepository;
 import com.douglasdc.projetotecdev.repositories.EquipamentoRepository;
@@ -37,8 +38,10 @@ public class DBService {
 	
 	public void instantiateTestDatabase() {
 		
-		Funcionario func1 = new Funcionario(null, "Lionel", "lionel@gmail.com", pe.encode("123"));
-		funcionarioRepository.saveAll(Arrays.asList(func1));
+		Funcionario func1 = new Funcionario(null, "Lionel", "lionel@gmail.com", pe.encode("123"), Perfil.ADMIN);
+		Funcionario func2 = new Funcionario(null, "Cristiano", "cristiano@gmail.com", pe.encode("123"), Perfil.TECNICO);
+		Funcionario func3 = new Funcionario(null, "Neymar", "neymar@gmail.com", pe.encode("123"), Perfil.RECEPCIONISTA);
+		funcionarioRepository.saveAll(Arrays.asList(func1, func2, func3));
 		
 		Cliente cli1 = new Cliente(null, "Pablo", "Rua Conceição, número 30", "pablo@gmail.com", "9999-8888");
 		Cliente cli2 = new Cliente(null, "Joana", "Rua Graça, número 95", "joana@gmail.com", "9999-7777");
