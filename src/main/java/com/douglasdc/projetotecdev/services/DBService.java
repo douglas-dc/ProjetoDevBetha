@@ -4,14 +4,17 @@ import java.time.LocalDate;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.douglasdc.projetotecdev.domain.Cliente;
 import com.douglasdc.projetotecdev.domain.Equipamento;
+import com.douglasdc.projetotecdev.domain.Funcionario;
 import com.douglasdc.projetotecdev.domain.OrdemDeServico;
 import com.douglasdc.projetotecdev.domain.enums.StatusDaOrdemDeServico;
 import com.douglasdc.projetotecdev.repositories.ClienteRepository;
 import com.douglasdc.projetotecdev.repositories.EquipamentoRepository;
+import com.douglasdc.projetotecdev.repositories.FuncionarioRepository;
 import com.douglasdc.projetotecdev.repositories.OrdemDeServicoRepository;
 
 @Service
@@ -26,7 +29,16 @@ public class DBService {
 	@Autowired
 	private ClienteRepository clienteRepository;
 	
+	@Autowired
+	private FuncionarioRepository funcionarioRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder pe;
+	
 	public void instantiateTestDatabase() {
+		
+		Funcionario func1 = new Funcionario(null, "Lionel", "lionel@gmail.com", pe.encode("123"));
+		funcionarioRepository.saveAll(Arrays.asList(func1));
 		
 		Cliente cli1 = new Cliente(null, "Pablo", "Rua Conceição, número 30", "pablo@gmail.com", "9999-8888");
 		Cliente cli2 = new Cliente(null, "Joana", "Rua Graça, número 95", "joana@gmail.com", "9999-7777");
