@@ -98,19 +98,4 @@ public class OrdemDeServicoResource {
 		URI uri = service.uploadAvariaImage(file, id);
 		return ResponseEntity.created(uri).build();
 	}
-	
-	
-	/*@GetMapping(value="/aprovadas")
-	public ResponseEntity<List<OrdemDeServico>> findByStatus() {
-		List<OrdemDeServico> obj = service.findByStatusAprovadas();
-		return ResponseEntity.ok().body(obj);
-	}*/
-	
-	/*@PutMapping(value="/{id}")
-	public ResponseEntity<Void> updateStatus(@RequestBody OrdemDeServicoDTO2 objDto, @PathVariable Integer id) {
-		OrdemDeServico obj = service.fromDTO(objDto);
-		obj.setId(id);
-		obj = service.update(obj);
-		return ResponseEntity.noContent().build();
-	}*/
 }

@@ -83,10 +83,6 @@ public class Funcionario implements Serializable {
 		this.perfil = perfil.getCod();
 	}
 	
-//	public void addPerfil(Perfil perfil) {
-//		perfis.add(perfil.getCod());
-//	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
