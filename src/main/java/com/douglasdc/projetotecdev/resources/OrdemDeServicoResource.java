@@ -46,7 +46,7 @@ public class OrdemDeServicoResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody OrdemDeServico obj) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody OrdemDeServico obj) {
 		obj.setInstante(LocalDate.now());
 		obj.setStatus(StatusDaOrdemDeServico.PENDENTE);
 		obj = service.insert(obj);
@@ -69,14 +69,14 @@ public class OrdemDeServicoResource {
 	}
 	
 	@PutMapping(value="/{id}")
-	public ResponseEntity<Void> update(@Valid @RequestBody OrdemDeServicoDTOPut objDto, @PathVariable Integer id) {
+	public ResponseEntity<Void> update(@RequestBody OrdemDeServicoDTOPut objDto, @PathVariable Integer id) {
 		objDto.setId(id);
 		service.update(objDto);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@PutMapping(value="/{id}/situacao")
-	public ResponseEntity<Void> update(@Valid @RequestParam(value="status") StatusDaOrdemDeServico status, @PathVariable Integer id) {
+	public ResponseEntity<Void> update(@RequestParam(value="status") StatusDaOrdemDeServico status, @PathVariable Integer id) {
 		service.updateStatus(status, id);
 		return ResponseEntity.noContent().build();
 	}

@@ -2,11 +2,14 @@ package com.douglasdc.projetotecdev.domain;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
 
 import com.douglasdc.projetotecdev.domain.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,11 +23,15 @@ public class Funcionario implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@NotEmpty(message="Preenchimento obrigatório")
+	@Length(min=3, max=80, message="O tamanho deve ser entre 3 e 80 caracteres")
 	private String nome;
 	
-	@Column(unique=true)
+	@NotEmpty(message="Preenchimento obrigatório")
+	@Email(message="Email inválido")
 	private String email;
 	
+	@NotEmpty(message="Preenchimento obrigatório")
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String senha;
 	
@@ -42,7 +49,7 @@ public class Funcionario implements Serializable {
 		this.senha = senha;
 		this.perfil = (perfil == null) ? null : perfil.getCod();
 	}
-
+	
 	public Integer getId() {
 		return id;
 	}
