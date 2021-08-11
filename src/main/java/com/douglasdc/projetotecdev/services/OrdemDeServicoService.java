@@ -71,11 +71,6 @@ public class OrdemDeServicoService {
 
 	public OrdemDeServico update(OrdemDeServicoDTOPut obj) {
 		OrdemDeServico newObj = find(obj.getId());
-		updateData(newObj, obj);
-		return repo.save(newObj);
-	}
-
-	private void updateData(OrdemDeServico newObj, OrdemDeServicoDTOPut obj) {
 		if (obj.getInstante() != null) {
 			newObj.setInstante(obj.getInstante());
 		}
@@ -88,6 +83,7 @@ public class OrdemDeServicoService {
 		if (obj.getEquipamentoTipo() != null) {
 			newObj.getEquipamento().setTipo(obj.getEquipamentoTipo());
 		}
+		return repo.save(newObj);
 	}
 
 	public OrdemDeServico updateStatus(@Valid StatusDaOrdemDeServico status, Integer id) {
