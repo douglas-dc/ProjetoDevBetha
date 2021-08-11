@@ -69,8 +69,8 @@ public class OrdemDeServicoService {
 		repo.deleteById(id);
 	}
 
-	public OrdemDeServico update(OrdemDeServicoDTOPut obj) {
-		OrdemDeServico newObj = find(obj.getId());
+	public OrdemDeServico update(OrdemDeServicoDTOPut obj, Integer id) {
+		OrdemDeServico newObj = find(id);
 		if (obj.getInstante() != null) {
 			newObj.setInstante(obj.getInstante());
 		}
