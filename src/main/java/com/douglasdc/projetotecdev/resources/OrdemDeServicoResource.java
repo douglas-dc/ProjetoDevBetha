@@ -25,6 +25,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.douglasdc.projetotecdev.domain.OrdemDeServico;
 import com.douglasdc.projetotecdev.domain.enums.StatusDaOrdemDeServico;
 import com.douglasdc.projetotecdev.dto.OrdemDeServicoDTO;
+import com.douglasdc.projetotecdev.dto.OrdemDeServicoDTOPut;
 import com.douglasdc.projetotecdev.services.OrdemDeServicoService;
 
 @RestController
@@ -68,10 +69,9 @@ public class OrdemDeServicoResource {
 	}
 	
 	@PutMapping(value="/{id}")
-	public ResponseEntity<Void> update(@Valid @RequestBody OrdemDeServicoDTO objDto, @PathVariable Integer id) {
-		OrdemDeServico obj = service.fromDTO(objDto);
-		obj.setId(id);
-		obj = service.update(obj);
+	public ResponseEntity<Void> update(@Valid @RequestBody OrdemDeServicoDTOPut objDto, @PathVariable Integer id) {
+		objDto.setId(id);
+		service.update(objDto);
 		return ResponseEntity.noContent().build();
 	}
 	

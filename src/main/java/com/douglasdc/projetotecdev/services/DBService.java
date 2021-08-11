@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.douglasdc.projetotecdev.domain.Cliente;
@@ -33,14 +32,14 @@ public class DBService {
 	@Autowired
 	private FuncionarioRepository funcionarioRepository;
 	
-	@Autowired
-	private BCryptPasswordEncoder pe;
+//	@Autowired
+//	private BCryptPasswordEncoder pe;
 	
 	public void instantiateTestDatabase() {
 		
-		Funcionario func1 = new Funcionario(null, "Lionel", "lionel@gmail.com", pe.encode("123"), Perfil.ADMIN);
-		Funcionario func2 = new Funcionario(null, "Cristiano", "cristiano@gmail.com", pe.encode("123"), Perfil.TECNICO);
-		Funcionario func3 = new Funcionario(null, "Neymar", "neymar@gmail.com", pe.encode("123"), Perfil.RECEPCIONISTA);
+		Funcionario func1 = new Funcionario(null, "Lionel", "lionel@gmail.com", "123", Perfil.ADMIN);
+		Funcionario func2 = new Funcionario(null, "Cristiano", "cristiano@gmail.com", "123", Perfil.TECNICO);
+		Funcionario func3 = new Funcionario(null, "Neymar", "neymar@gmail.com", "123", Perfil.RECEPCIONISTA);
 		funcionarioRepository.saveAll(Arrays.asList(func1, func2, func3));
 		
 		Cliente cli1 = new Cliente(null, "Pablo", "Rua Conceição, número 30", "pablo@gmail.com", "9999-8888");
