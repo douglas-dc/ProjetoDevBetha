@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.douglasdc.projetotecdev.domain.OrdemDeServico;
 import com.douglasdc.projetotecdev.domain.enums.StatusDaOrdemDeServico;
-import com.douglasdc.projetotecdev.dto.OrdemDeServicoDTO;
 import com.douglasdc.projetotecdev.dto.OrdemDeServicoDTOPut;
 import com.douglasdc.projetotecdev.repositories.EquipamentoRepository;
 import com.douglasdc.projetotecdev.repositories.OrdemDeServicoRepository;
@@ -47,12 +46,6 @@ public class OrdemDeServicoService {
 	@Value("${img.prefix.url}")
 	private String prefixUrl;
 	
-//	public OrdemDeServico find(Integer id) {
-//		Optional<OrdemDeServico> obj = repo.findById(id);
-//		return obj.orElseThrow(() -> new ObjectNotFoundException(
-//				"Ordem de serviço não encontrada! Id: " + id + ", Tipo: " + OrdemDeServico.class.getName()));
-//	}
-	
 	public OrdemDeServico find(Integer id) {
 		OrdemDeServico obj = repo.findById(id).orElseThrow(() -> new ObjectNotFoundException(
 				"Ordem de serviço não encontrada! Id: " + id + ", Tipo: " + OrdemDeServico.class.getName()));
@@ -75,30 +68,14 @@ public class OrdemDeServicoService {
 	public void delete(Integer id) {
 		repo.deleteById(id);
 	}
-	
-	public OrdemDeServico fromDTO(@Valid OrdemDeServicoDTO objDto) {
-		return new OrdemDeServico(objDto.getId(), objDto.getInstante(), objDto.getClienteNome(), objDto.getStatus());
-	}
 
-//	public OrdemDeServico update(OrdemDeServico obj) {
-//		OrdemDeServico newObj = find(obj.getId());
-//		updateData(newObj, obj);
-//		return repo.save(newObj);
-//	}
-//
-//	private void updateData(OrdemDeServico newObj, OrdemDeServico obj) {
-//		newObj.setInstante(obj.getInstante());
-//		newObj.setCliente(obj.getCliente());
-//		newObj.setEquipamento(obj.getEquipamento());
-//	}
-	
 	public OrdemDeServico update(OrdemDeServicoDTOPut obj) {
 		OrdemDeServico newObj = find(obj.getId());
-		updateData2(newObj, obj);
+		updateData(newObj, obj);
 		return repo.save(newObj);
 	}
 
-	private void updateData2(OrdemDeServico newObj, OrdemDeServicoDTOPut obj) {
+	private void updateData(OrdemDeServico newObj, OrdemDeServicoDTOPut obj) {
 		if (obj.getInstante() != null) {
 			newObj.setInstante(obj.getInstante());
 		}
