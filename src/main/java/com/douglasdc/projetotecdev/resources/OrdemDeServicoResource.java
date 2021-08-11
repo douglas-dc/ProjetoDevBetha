@@ -70,8 +70,7 @@ public class OrdemDeServicoResource {
 	
 	@PutMapping(value="/{id}")
 	public ResponseEntity<Void> update(@RequestBody OrdemDeServicoDTOPut objDto, @PathVariable Integer id) {
-		objDto.setId(id);
-		service.update(objDto);
+		service.update(objDto, id);
 		return ResponseEntity.noContent().build();
 	}
 	

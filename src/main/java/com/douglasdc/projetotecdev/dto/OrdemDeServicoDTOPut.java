@@ -6,7 +6,6 @@ import java.time.LocalDate;
 public class OrdemDeServicoDTOPut implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private Integer id;
 	private LocalDate instante;
 	private String equipamentoTipo;
 	private String equipamentoDescricao;
@@ -24,13 +23,6 @@ public class OrdemDeServicoDTOPut implements Serializable {
 		this.clienteId = clienteId;
 	}
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public LocalDate getInstante() {
 		return instante;
