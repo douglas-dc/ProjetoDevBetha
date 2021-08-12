@@ -14,8 +14,10 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.douglasdc.projetotecdev.services.validation.ClienteInsert;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@ClienteInsert
 @Entity
 public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
