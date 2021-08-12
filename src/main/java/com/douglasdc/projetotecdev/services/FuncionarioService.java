@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-//import com.amazonaws.services.licensemanager.model.AuthorizationException;
 import com.douglasdc.projetotecdev.domain.Funcionario;
 //import com.douglasdc.projetotecdev.domain.enums.Perfil;
 import com.douglasdc.projetotecdev.repositories.FuncionarioRepository;
@@ -34,6 +33,23 @@ public class FuncionarioService {
 
 	public void delete(Integer id) {
 		repo.deleteById(id);
+	}
+	
+	public Funcionario update(Funcionario obj) {
+		Funcionario newObj = find(obj.getId());
+		if (obj.getNome() != null) {
+			newObj.setNome(obj.getNome());
+		}
+		if (obj.getEmail() != null) {
+			newObj.setEmail(obj.getEmail());
+		}
+		if (obj.getPerfil() != null) {
+			newObj.setPerfil(obj.getPerfil());
+		}
+		if (obj.getSenha() != null) {
+			newObj.setSenha(obj.getSenha());
+		}
+		return repo.save(newObj);
 	}
 	
 //	public Funcionario findByEmail(String email) {
