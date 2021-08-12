@@ -12,11 +12,9 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import com.douglasdc.projetotecdev.domain.enums.Perfil;
-import com.douglasdc.projetotecdev.services.validation.FuncionarioInsert;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
-@FuncionarioInsert
 @Entity
 public class Funcionario implements Serializable {
 	private static final long serialVersionUID = 1L;
