@@ -32,6 +32,10 @@ public class FuncionarioService {
 		return repo.save(obj);
 	}
 
+	public void delete(Integer id) {
+		repo.deleteById(id);
+	}
+	
 //	public Funcionario findByEmail(String email) {
 //
 //		UserSS user = UserService.authenticated();
