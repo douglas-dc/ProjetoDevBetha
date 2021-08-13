@@ -53,7 +53,7 @@ public class OrdemDeServicoService {
 	public OrdemDeServico insert(OrdemDeServico obj) {
 		obj.setId(null);
 		obj.setCliente(clienteService.find(obj.getCliente().getId()));
-		obj = repo.save(obj);
+		repo.save(obj);
 		for (Equipamento equip : obj.getEquipamentos()) {
 			equip.setOrdemDeServico(obj);
 			equipamentoRepository.save(equip);
@@ -93,8 +93,12 @@ public class OrdemDeServicoService {
 			for (Equipamento equipNew : newObj.getEquipamentos()) {
 				for (Equipamento equipObj : obj.getEquipamentos()) {
 					if (equipNew.getId() == equipObj.getId()) {
-						equipNew.setDescricao(equipObj.getDescricao());
-						equipNew.setTipo(equipObj.getTipo());
+						if (!equipObj.getDescricao().isBlank() || (!equipObj.getTipo().isBlank())) {
+							throw new DataIntegrityException("Erro: insira um equipamento válido");
+						} else {
+							equipNew.setDescricao(equipObj.getDescricao());
+							equipNew.setTipo(equipObj.getTipo());
+						}
 						equipamentoRepository.save(equipNew);
 					}
 				}
