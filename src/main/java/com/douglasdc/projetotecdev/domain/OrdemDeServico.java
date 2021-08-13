@@ -2,6 +2,8 @@ package com.douglasdc.projetotecdev.domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,7 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 
 import com.douglasdc.projetotecdev.domain.enums.StatusDaOrdemDeServico;
 
@@ -24,8 +26,8 @@ public class OrdemDeServico implements Serializable {
 	
 	private LocalDate instante;
 
-	@OneToOne(cascade=CascadeType.ALL, mappedBy="ordemDeServico")
-	private Equipamento equipamento;
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="ordemDeServico")
+	private List<Equipamento> equipamentos = new ArrayList<>();
 	
 	@ManyToOne
 	@JoinColumn(name="cliente_id")
@@ -71,12 +73,12 @@ public class OrdemDeServico implements Serializable {
 		this.instante = instante;
 	}
 
-	public Equipamento getEquipamento() {
-		return equipamento;
+	public List<Equipamento> getEquipamentos() {
+		return equipamentos;
 	}
 
-	public void setEquipamento(Equipamento equipamento) {
-		this.equipamento = equipamento;
+	public void setEquipamentos(List<Equipamento> equipamentos) {
+		this.equipamentos = equipamentos;
 	}
 
 	public Cliente getCliente() {
@@ -138,7 +140,7 @@ public class OrdemDeServico implements Serializable {
 		builder.append(", Cliente: ");
 		builder.append(getCliente());
 		builder.append(", Equipamento: ");
-		builder.append(getEquipamento());
+		builder.append(getEquipamentos());
 		builder.append("Deseja confirmar a realização do serviço? ");
 		builder.append("http://localhost:8080/ordens/" + getId() + "/aprovada");
 		builder.append(" http://localhost:8080/ordens/" + getId() + "/recusada");

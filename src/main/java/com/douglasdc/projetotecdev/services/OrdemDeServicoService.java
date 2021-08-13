@@ -4,16 +4,14 @@ import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.douglasdc.projetotecdev.domain.Equipamento;
 import com.douglasdc.projetotecdev.domain.OrdemDeServico;
 import com.douglasdc.projetotecdev.domain.enums.StatusDaOrdemDeServico;
-import com.douglasdc.projetotecdev.dto.OrdemDeServicoDTOPut;
 import com.douglasdc.projetotecdev.repositories.EquipamentoRepository;
 import com.douglasdc.projetotecdev.repositories.OrdemDeServicoRepository;
 import com.douglasdc.projetotecdev.services.exceptions.DataIntegrityException;
@@ -54,10 +52,12 @@ public class OrdemDeServicoService {
 
 	public OrdemDeServico insert(OrdemDeServico obj) {
 		obj.setId(null);
-		obj.getEquipamento().setOrdemDeServico(obj);
 		obj.setCliente(clienteService.find(obj.getCliente().getId()));
 		obj = repo.save(obj);
-		equipamentoRepository.save(obj.getEquipamento());
+		for (Equipamento equip : obj.getEquipamentos()) {
+			equip.setOrdemDeServico(obj);
+			equipamentoRepository.save(equip);
+		}
 		return obj;
 	}
 
@@ -69,33 +69,38 @@ public class OrdemDeServicoService {
 		repo.deleteById(id);
 	}
 
-	public OrdemDeServico update(OrdemDeServicoDTOPut obj, Integer id) {
+	public OrdemDeServico update(OrdemDeServico obj, Integer id) {
 		OrdemDeServico newObj = find(id);
 		if (obj.getInstante() != null) {
 			newObj.setInstante(obj.getInstante());
 		}
-		if (obj.getClienteId() != null) {
-			newObj.setCliente(clienteService.find(obj.getClienteId()));
+		
+		if (obj.getCliente() != null) {
+			newObj.setCliente(clienteService.find(obj.getCliente().getId()));
 		}
-		if (obj.getEquipamentoDescricao() != null) {
-			newObj.getEquipamento().setDescricao(obj.getEquipamentoDescricao());
+		
+		if (obj.getStatus() != null) {
+			validarStatus(obj.getStatus(), newObj);
+			if (newObj.getStatus() == StatusDaOrdemDeServico.AGUARDANDO_CLIENTE) {
+				emailService.sendOrderConfirmationHtmlEmail(newObj);
+			}
+			if (newObj.getStatus() == StatusDaOrdemDeServico.CONCLUIDA) {
+				emailService.sendOrderConclusionHtmlEmail(newObj);
+			}
 		}
-		if (obj.getEquipamentoTipo() != null) {
-			newObj.getEquipamento().setTipo(obj.getEquipamentoTipo());
+		
+		if (obj.getEquipamentos() != null) {
+			for (Equipamento equipNew : newObj.getEquipamentos()) {
+				for (Equipamento equipObj : obj.getEquipamentos()) {
+					if (equipNew.getId() == equipObj.getId()) {
+						equipNew.setDescricao(equipObj.getDescricao());
+						equipNew.setTipo(equipObj.getTipo());
+						equipamentoRepository.save(equipNew);
+					}
+				}
+			}
 		}
 		return repo.save(newObj);
-	}
-
-	public OrdemDeServico updateStatus(@Valid StatusDaOrdemDeServico status, Integer id) {
-		OrdemDeServico obj = find(id);
-		validarStatus(status, obj);
-		if (obj.getStatus() == StatusDaOrdemDeServico.AGUARDANDO_CLIENTE) {
-			emailService.sendOrderConfirmationHtmlEmail(obj);
-		}
-		if (obj.getStatus() == StatusDaOrdemDeServico.CONCLUIDA) {
-			emailService.sendOrderConclusionHtmlEmail(obj);
-		}
-		return repo.save(obj);
 	}
 	
 	public OrdemDeServico validarStatus(StatusDaOrdemDeServico status, OrdemDeServico obj) {

@@ -14,14 +14,9 @@
 					th:text="${ordemdeservico.instante}"></span>
 			</p>
 			<p>
-				Cliente: <span th:text="${ordemdeservico.cliente}"></span>
+				Cliente: <span th:text="${ordemdeservico.cliente.nome}"></span>
 			</p>
-			<p>
-				Equipamento: <span th:text="${ordemdeservico.equipamento.tipo}"></span>
-			</p>
-			<p>
-				Descrição do problema:<span th:text="${ordemdeservico.equipamento.descricao}"></span>
-			</p>
+			
 			<p>
 				Informamos que a Ordem de Serviço acima foi concluída. Para outras informações entre em contato.
 			</p>
