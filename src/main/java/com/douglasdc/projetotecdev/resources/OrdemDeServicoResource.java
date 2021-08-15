@@ -3,7 +3,6 @@ package com.douglasdc.projetotecdev.resources;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -22,9 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.douglasdc.projetotecdev.domain.Equipamento;
 import com.douglasdc.projetotecdev.domain.OrdemDeServico;
 import com.douglasdc.projetotecdev.domain.enums.StatusDaOrdemDeServico;
-import com.douglasdc.projetotecdev.dto.OrdemDeServicoDTO;
 import com.douglasdc.projetotecdev.services.OrdemDeServicoService;
 
 @RestController
@@ -40,7 +39,9 @@ public class OrdemDeServicoResource {
 	@GetMapping(value="/{id}")
 	public ResponseEntity<OrdemDeServico> find(@PathVariable Integer id) {
 		OrdemDeServico obj = service.find(id);
-		obj.setImageName(prefixUrl + obj.getImageName());
+		for (Equipamento equip : obj.getEquipamentos()) {
+    		equip.setImageName(prefixUrl + equip.getImageName());
+    	}
 		return ResponseEntity.ok().body(obj);
 	}
 
@@ -55,11 +56,15 @@ public class OrdemDeServicoResource {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<OrdemDeServicoDTO>> findAll() {
-		List<OrdemDeServico> lista = service.findAll();
-		List<OrdemDeServicoDTO> listaDto = lista.stream().map(obj -> new OrdemDeServicoDTO(obj)).collect(Collectors.toList());
-		return ResponseEntity.ok().body(listaDto);
-	}
+    public ResponseEntity<List<OrdemDeServico>> findAll() {
+        List<OrdemDeServico> list = service.findAll();
+        for (OrdemDeServico obj : list) {
+        	for (Equipamento equip : obj.getEquipamentos()) {
+        		equip.setImageName(prefixUrl + equip.getImageName());
+        	}
+        }
+        return ResponseEntity.ok().body(list);
+    }
 
 	@DeleteMapping(value="/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
@@ -85,7 +90,7 @@ public class OrdemDeServicoResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PostMapping(value="/{id}/avarias")
+	@PostMapping(value="/avarias/equipamento/{id}")
 	public ResponseEntity<Void> insert(@RequestParam(name="file") MultipartFile file, @PathVariable Integer id) {
 		URI uri = service.uploadAvariaImage(file, id);
 		return ResponseEntity.created(uri).build();
