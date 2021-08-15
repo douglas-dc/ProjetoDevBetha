@@ -159,11 +159,12 @@ public class OrdemDeServicoService {
 	}
 	
 	public URI uploadAvariaImage(MultipartFile multipartFile, Integer id) {
-		OrdemDeServico obj = find(id);
+		Equipamento equip = equipamentoRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+				"Equipamento não encontrado! Id: " + id + ", Tipo: " + Equipamento.class.getName()));
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
-		String fileName = prefixName + obj.getId() + ".jpg";
-		obj.setImageName(fileName);
-		repo.save(obj);
+		String fileName = prefixName + equip.getId() + ".jpg";
+		equip.setImageName(fileName);
+		equipamentoRepository.save(equip);
 		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
 	}
 }

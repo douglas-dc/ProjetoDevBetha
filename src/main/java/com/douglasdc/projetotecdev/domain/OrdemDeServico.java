@@ -34,9 +34,7 @@ public class OrdemDeServico implements Serializable {
 	private Cliente cliente;
 
 	private Integer status;
-
-	private String imageName;
-
+	
 	public OrdemDeServico() {
 
 	}
@@ -95,14 +93,6 @@ public class OrdemDeServico implements Serializable {
 
 	public void setStatus(StatusDaOrdemDeServico status) {
 		this.status = status.getCod();
-	}
-
-	public String getImageName() {
-		return imageName;
-	}
-
-	public void setImageName(String imageName) {
-		this.imageName = imageName;
 	}
 
 	@Override

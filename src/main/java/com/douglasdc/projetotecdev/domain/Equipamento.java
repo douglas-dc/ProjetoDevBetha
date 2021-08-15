@@ -23,6 +23,8 @@ public class Equipamento implements Serializable {
 	
 	private String descricao;
 	
+	private String imageName;
+	
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="ordemDeServico_id")
@@ -64,6 +66,14 @@ public class Equipamento implements Serializable {
 		this.descricao = descricao;
 	}
 
+	public String getImageName() {
+		return imageName;
+	}
+
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
+	
 	public OrdemDeServico getOrdemDeServico() {
 		return ordemDeServico;
 	}
@@ -96,4 +106,6 @@ public class Equipamento implements Serializable {
 			return false;
 		return true;
 	}
+
+	
 }
