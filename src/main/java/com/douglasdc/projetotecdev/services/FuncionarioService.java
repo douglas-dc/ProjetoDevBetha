@@ -50,19 +50,18 @@ public class FuncionarioService {
 		return repo.save(newObj);
 	}
 	
-//	public Funcionario findByEmail(String email) {
-//
-//		UserSS user = UserService.authenticated();
+	public Funcionario findByEmail(String email) {
+
+		//UserSS user = UserService.authenticated();
 //		if (user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
 //			throw new AuthorizationException("Acesso negado");
 //		}
-//
-//		Funcionario obj = repo.findByEmail(email);
-//		if (obj == null) {
-//			throw new ObjectNotFoundException(
-//					"Objeto não encontrado! Id: " + user.getId() + ", Tipo: " + Funcionario.class.getName());
-//		}
-//		return obj;
-//	}
 
+		Funcionario obj = repo.findByEmail(email);
+		if (obj == null) {
+			throw new ObjectNotFoundException(
+					"Funcionário não encontrado!" + " Email: " + email +  " Tipo: " + Funcionario.class.getName());
+		}
+		return obj;
+	}
 }
