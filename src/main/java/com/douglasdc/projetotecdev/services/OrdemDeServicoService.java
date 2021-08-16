@@ -93,7 +93,7 @@ public class OrdemDeServicoService {
 			for (Equipamento equipNew : newObj.getEquipamentos()) {
 				for (Equipamento equipObj : obj.getEquipamentos()) {
 					if (equipNew.getId() == equipObj.getId()) {
-						if (!equipObj.getDescricao().isBlank() || (!equipObj.getTipo().isBlank())) {
+						if (equipObj.getDescricao().isBlank() || (equipObj.getTipo().isBlank())) {
 							throw new DataIntegrityException("Erro: insira um equipamento válido");
 						} else {
 							equipNew.setDescricao(equipObj.getDescricao());
