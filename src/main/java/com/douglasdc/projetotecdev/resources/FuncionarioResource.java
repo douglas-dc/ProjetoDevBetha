@@ -1,6 +1,7 @@
 package com.douglasdc.projetotecdev.resources;
 
 import java.net.URI;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -41,6 +42,13 @@ public class FuncionarioResource {
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
+	
+	//@PreAuthorize("hasAnyRole('ADMIN')")
+		@GetMapping
+	    public ResponseEntity<List<Funcionario>> findAll() {
+	        List<Funcionario> list = service.findAll();
+	        return ResponseEntity.ok().body(list);
+	    }
 	
 	//@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping(value="/{id}")

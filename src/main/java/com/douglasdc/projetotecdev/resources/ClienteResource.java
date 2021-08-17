@@ -1,6 +1,7 @@
 package com.douglasdc.projetotecdev.resources;
 
 import java.net.URI;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -40,6 +41,13 @@ public class ClienteResource {
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
+	
+	//@PreAuthorize("hasAnyRole('ADMIN', 'RECEPCIONISTA')")
+	@GetMapping
+    public ResponseEntity<List<Cliente>> findAll() {
+        List<Cliente> list = service.findAll();
+        return ResponseEntity.ok().body(list);
+    }
 	
 	//@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping(value="/{id}")
