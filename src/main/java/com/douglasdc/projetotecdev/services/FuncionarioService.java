@@ -1,5 +1,7 @@
 package com.douglasdc.projetotecdev.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,10 @@ public class FuncionarioService {
 		obj.setId(null);
 		obj.setSenha((pe.encode(obj.getSenha())));
 		return repo.save(obj);
+	}
+	
+	public List<Funcionario> findAll() {
+		return repo.findAll();
 	}
 
 	public void delete(Integer id) {
