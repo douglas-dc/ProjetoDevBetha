@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
-import com.amazonaws.services.licensemanager.model.AuthorizationException;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
+import com.douglasdc.projetotecdev.services.exceptions.AuthorizationException;
 import com.douglasdc.projetotecdev.services.exceptions.DataIntegrityException;
 import com.douglasdc.projetotecdev.services.exceptions.FileException;
 import com.douglasdc.projetotecdev.services.exceptions.ObjectNotFoundException;
@@ -75,7 +75,7 @@ public class ResourceExceptionHandler {
 	@ExceptionHandler(AuthorizationException.class)
 	public ResponseEntity<StandardError> authorization(AuthorizationException e, HttpServletRequest request) {
 		
-		StandardError err = new StandardError(System.currentTimeMillis() ,HttpStatus.FORBIDDEN.value(), "Acesso negado",  e.getMessage(), request.getRequestURI());
-		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
+		StandardError erro = new StandardError(System.currentTimeMillis() ,HttpStatus.FORBIDDEN.value(), "Acesso negado",  e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(erro);
 	}
 }

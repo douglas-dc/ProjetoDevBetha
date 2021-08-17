@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-//import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -29,7 +28,6 @@ public class FuncionarioResource {
 	@Autowired
 	private FuncionarioService service;
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping(value="/{id}")
 	public ResponseEntity<Funcionario> find(@PathVariable Integer id) {
 		Funcionario obj = service.find(id);
@@ -60,7 +58,6 @@ public class FuncionarioResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping(value="/email")
 	public ResponseEntity<Funcionario> find(@RequestParam(value="value") String email) {
 		Funcionario obj = service.findByEmail(email);
