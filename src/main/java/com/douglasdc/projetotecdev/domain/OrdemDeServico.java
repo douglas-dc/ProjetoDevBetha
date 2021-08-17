@@ -47,14 +47,6 @@ public class OrdemDeServico implements Serializable {
 		this.status = (status == null) ? null : status.getCod();
 	}
 	
-	public OrdemDeServico(Integer id, LocalDate instante, String clienteNome, StatusDaOrdemDeServico status) {
-		super();
-		this.id = id;
-		this.instante = instante;
-		this.cliente.setNome(clienteNome);
-		this.status = (status == null) ? null : status.getCod();
-	}
-
 	public Integer getId() {
 		return id;
 	}
