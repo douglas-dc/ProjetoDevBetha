@@ -5,7 +5,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.douglasdc.projetotecdev.domain.Funcionario;
+import com.douglasdc.projetotecdev.domain.enums.Perfil;
 import com.douglasdc.projetotecdev.repositories.FuncionarioRepository;
+import com.douglasdc.projetotecdev.security.UserSS;
+import com.douglasdc.projetotecdev.services.exceptions.AuthorizationException;
 import com.douglasdc.projetotecdev.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -18,6 +21,11 @@ public class FuncionarioService {
 	private BCryptPasswordEncoder pe;
 
 	public Funcionario find(Integer id) {
+		UserSS user = UserService.authenticated();
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		Funcionario obj = repo.findById(id).orElseThrow(() -> new ObjectNotFoundException(
 				"Funcionario não encontrado! Id: " + id + ", Tipo: " + Funcionario.class.getName()));
 		return obj;
@@ -52,10 +60,10 @@ public class FuncionarioService {
 	
 	public Funcionario findByEmail(String email) {
 
-		//UserSS user = UserService.authenticated();
-//		if (user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
-//			throw new AuthorizationException("Acesso negado");
-//		}
+		UserSS user = UserService.authenticated();
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Acesso negado");
+		}
 
 		Funcionario obj = repo.findByEmail(email);
 		if (obj == null) {
