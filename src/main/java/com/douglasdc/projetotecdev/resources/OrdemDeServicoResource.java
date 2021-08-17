@@ -9,7 +9,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +36,7 @@ public class OrdemDeServicoResource {
 	@Value("${img.prefix.url}")
 	private String prefixUrl;
 	
-	@PreAuthorize("hasAnyRole('ADMIN', 'RECEPCIONISTA', 'TECNICO')")
+	//@PreAuthorize("hasAnyRole('ADMIN', 'RECEPCIONISTA', 'TECNICO')")
 	@GetMapping(value="/{id}")
 	public ResponseEntity<OrdemDeServico> find(@PathVariable Integer id) {
 		OrdemDeServico obj = service.find(id);
@@ -47,7 +46,7 @@ public class OrdemDeServicoResource {
 		return ResponseEntity.ok().body(obj);
 	}
 
-	@PreAuthorize("hasAnyRole('ADMIN', 'RECEPCIONISTA')")
+	//@PreAuthorize("hasAnyRole('ADMIN', 'RECEPCIONISTA')")
 	@PostMapping
 	public ResponseEntity<Void> insert(@Valid @RequestBody OrdemDeServico obj) {
 		obj.setInstante(LocalDate.now());
@@ -58,7 +57,7 @@ public class OrdemDeServicoResource {
 		return ResponseEntity.created(uri).build();
 	}
 
-	@PreAuthorize("hasAnyRole('ADMIN', 'RECEPCIONISTA', 'TECNICO')")
+	//@PreAuthorize("hasAnyRole('ADMIN', 'RECEPCIONISTA', 'TECNICO')")
 	@GetMapping
     public ResponseEntity<List<OrdemDeServico>> findAll() {
         List<OrdemDeServico> list = service.findAll();
@@ -70,14 +69,14 @@ public class OrdemDeServicoResource {
         return ResponseEntity.ok().body(list);
     }
 
-	@PreAuthorize("hasAnyRole('ADMIN')")
+	//@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping(value="/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN', 'TECNICO')")
+	//@PreAuthorize("hasAnyRole('ADMIN', 'TECNICO')")
 	@PutMapping(value="/{id}")
 	public ResponseEntity<Void> update(@RequestBody OrdemDeServico obj, @PathVariable Integer id) {
 		service.update(obj, id);
@@ -96,7 +95,7 @@ public class OrdemDeServicoResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN', 'TECNICO')")
+	//@PreAuthorize("hasAnyRole('ADMIN', 'TECNICO')")
 	@PostMapping(value="/avarias/equipamento/{id}")
 	public ResponseEntity<Void> insert(@RequestParam(name="file") MultipartFile file, @PathVariable Integer id) {
 		URI uri = service.uploadAvariaImage(file, id);
