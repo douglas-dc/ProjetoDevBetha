@@ -31,19 +31,7 @@ public class ClienteService {
 	}
 
 	public Cliente update(Cliente obj) {
-		Cliente newObj = find(obj.getId());
-		if (obj.getNome() != null) {
-			newObj.setNome(obj.getNome());
-		}
-		if (obj.getEmail() != null) {
-			newObj.setEmail(obj.getEmail());
-		}
-		if (obj.getEndereco() != null) {
-			newObj.setEndereco(obj.getEndereco());
-		}
-		if (obj.getTelefone() != null) {
-			newObj.setTelefone(obj.getTelefone());
-		}
-		return repo.save(newObj);
+		find(obj.getId());
+		return repo.save(obj);
 	}
 }
