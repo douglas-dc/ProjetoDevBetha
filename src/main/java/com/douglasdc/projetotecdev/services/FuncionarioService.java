@@ -23,10 +23,10 @@ public class FuncionarioService {
 	private BCryptPasswordEncoder pe;
 
 	public Funcionario find(Integer id) {
-		UserSS user = UserService.authenticated();
-		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
-			throw new AuthorizationException("Acesso negado");
-		}
+//		UserSS user = UserService.authenticated();
+//		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+//			throw new AuthorizationException("Acesso negado");
+//		}
 		
 		Funcionario obj = repo.findById(id).orElseThrow(() -> new ObjectNotFoundException(
 				"Funcionario não encontrado! Id: " + id + ", Tipo: " + Funcionario.class.getName()));
