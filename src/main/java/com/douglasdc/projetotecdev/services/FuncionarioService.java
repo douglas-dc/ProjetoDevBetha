@@ -48,20 +48,8 @@ public class FuncionarioService {
 	}
 	
 	public Funcionario update(Funcionario obj) {
-		Funcionario newObj = find(obj.getId());
-		if (obj.getNome() != null) {
-			newObj.setNome(obj.getNome());
-		}
-		if (obj.getEmail() != null) {
-			newObj.setEmail(obj.getEmail());
-		}
-		if (obj.getPerfil() != null) {
-			newObj.setPerfil(obj.getPerfil());
-		}
-		if (obj.getSenha() != null) {
-			newObj.setSenha(pe.encode(obj.getSenha()));
-		}
-		return repo.save(newObj);
+		find(obj.getId());
+		return repo.save(obj);
 	}
 	
 	public Funcionario findByEmail(String email) {
