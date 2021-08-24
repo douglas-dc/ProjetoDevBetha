@@ -24,14 +24,14 @@ public class Cliente implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
-	@NotBlank(message="Preenchimento obrigatório")
+	@NotBlank(message="Preenchimento de nome obrigatório")
 	@Length(min=3, max=80, message="O tamanho deve ser entre 3 e 80 caracteres")
 	private String nome;
 	
-	@NotBlank(message="Preenchimento obrigatório")
+	@NotBlank(message="Preenchimento de endereço obrigatório")
 	private String endereco;
 	
-	@NotBlank(message="Preenchimento obrigatório")
+	@NotBlank(message="Preenchimento de email obrigatório")
 	@Email(message="Email inválido")
 	private String email;
 	
