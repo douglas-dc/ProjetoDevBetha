@@ -25,7 +25,7 @@ public class Cliente implements Serializable {
 	private Integer id;
 	
 	@NotBlank(message="Preenchimento de nome obrigatório")
-	@Length(min=3, max=80, message="O tamanho deve ser entre 3 e 80 caracteres")
+	@Length(min=3, max=80, message="O nome deve ter entre 3 e 80 caracteres")
 	private String nome;
 	
 	@NotBlank(message="Preenchimento de endereço obrigatório")
