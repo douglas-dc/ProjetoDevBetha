@@ -10,11 +10,28 @@
 				Ordem de Serviço número: <span th:text="${ordemdeservico.id}"> </span>
 			</h1>
 			<p>
-				Instante: <span
-					th:text="${ordemdeservico.instante}"></span>
+				Instante: <span th:text="${ordemdeservico.instante}"></span>
+					
 			</p>
 			<p>
 				Cliente: <span th:text="${ordemdeservico.cliente.nome}"></span>
+			</p>
+			
+			<p>
+				Equipamentos:
+				<table>
+				    <tr>
+				        <th>Tipo</th>
+				        <th>Descrição</th>
+				        <th>Imagem</th>
+				    </tr>
+				    <tr th:each="equipamento: ${ordemdeservico.equipamentos}">
+				        <td th:text="${equipamento.tipo}"></td>
+				        <td th:text="${equipamento.descricao}"></td>
+				        <td th:text="${prefixo} + ${equipamento.imageName}"></td>
+				    </tr>
+				</table>
+
 			</p>
 		
 			<p>

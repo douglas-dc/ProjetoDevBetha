@@ -26,6 +26,9 @@ public abstract class AbstractEmailService implements EmailService{
 	@Autowired
 	private JavaMailSender javaMailSender;
 	
+	@Value("${img.prefix.url}")
+	private String prefixUrl;
+	
 	@Override
 	public void sendOrderConfirmation(OrdemDeServico obj) {
 		SimpleMailMessage sm = prepareSimpleMailMessageFromOrdemDeServico(obj);
@@ -61,6 +64,7 @@ public abstract class AbstractEmailService implements EmailService{
 	protected String htmlFromTemplateOrdemDeServico(OrdemDeServico obj) {
 		Context context = new Context();
 		context.setVariable("ordemdeservico", obj);
+		context.setVariable("prefixo", prefixUrl);
 		context.setVariable("osAprovadaUrl", "http://localhost:8080/ordens/" + obj.getId() + "/aprovada");
 		context.setVariable("osRecusadaUrl", "http://localhost:8080/ordens/" + obj.getId() + "/recusada");
 		System.out.println(templateEngine.process("email/confirmacaoDeOrdem", context));
@@ -70,6 +74,7 @@ public abstract class AbstractEmailService implements EmailService{
 	protected String htmlFromTemplateOrdemDeServicoConclusion(OrdemDeServico obj) {
 		Context context = new Context();
 		context.setVariable("ordemdeservico", obj);
+		context.setVariable("prefixo", prefixUrl);
 		System.out.println(templateEngine.process("email/conclusaoDeOrdem", context));
 		return templateEngine.process("email/conclusaoDeOrdem", context);
 	}

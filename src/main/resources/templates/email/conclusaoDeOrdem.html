@@ -18,6 +18,23 @@
 			</p>
 			
 			<p>
+				Equipamentos:
+				<table>
+				    <tr>
+				        <th>Tipo</th>
+				        <th>Descrição</th>
+				        <th>Imagem</th>
+				    </tr>
+				    <tr th:each="equipamento: ${ordemdeservico.equipamentos}">
+				        <td th:text="${equipamento.tipo}"></td>
+				        <td th:text="${equipamento.descricao}"></td>
+				        <td th:text="${prefixo} + ${equipamento.imageName}"></td>
+				    </tr>
+				</table>
+
+			</p>
+			
+			<p>
 				Informamos que a Ordem de Serviço acima foi concluída. Para outras informações entre em contato.
 			</p>
 		</div>
