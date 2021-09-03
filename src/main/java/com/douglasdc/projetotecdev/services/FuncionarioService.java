@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.douglasdc.projetotecdev.domain.Funcionario;
 import com.douglasdc.projetotecdev.domain.enums.Perfil;
+import com.douglasdc.projetotecdev.dto.FuncionarioDTO;
 import com.douglasdc.projetotecdev.repositories.FuncionarioRepository;
 import com.douglasdc.projetotecdev.security.UserSS;
 import com.douglasdc.projetotecdev.services.exceptions.AuthorizationException;
@@ -47,9 +48,20 @@ public class FuncionarioService {
 		repo.deleteById(id);
 	}
 	
+	public Funcionario fromDTO(FuncionarioDTO objDto) {
+		return new Funcionario(null, objDto.getNome(), objDto.getEmail(), null, objDto.getPerfil());
+	}
+	
 	public Funcionario update(Funcionario obj) {
-		find(obj.getId());
-		return repo.save(obj);
+		Funcionario newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
+	}
+	
+	private void updateData(Funcionario newObj, Funcionario obj) {
+		newObj.setEmail(obj.getEmail());
+		newObj.setNome(obj.getNome());
+		newObj.setPerfil(obj.getPerfil());
 	}
 	
 	public Funcionario findByEmail(String email) {
@@ -66,4 +78,6 @@ public class FuncionarioService {
 		}
 		return obj;
 	}
+
+	
 }
