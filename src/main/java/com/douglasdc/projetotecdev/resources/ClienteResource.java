@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,14 +27,14 @@ public class ClienteResource {
 	@Autowired
 	private ClienteService service;
 	
-	//@PreAuthorize("hasAnyRole('ADMIN', 'RECEPCIONISTA')")
+	@PreAuthorize("hasAnyRole('ADMIN', 'RECEPCIONISTA')")
 	@GetMapping(value="/{id}")
 	public ResponseEntity<Cliente> find(@PathVariable Integer id) {
 		Cliente obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
-	//@PreAuthorize("hasAnyRole('ADMIN', 'RECEPCIONISTA')")
+	@PreAuthorize("hasAnyRole('ADMIN', 'RECEPCIONISTA')")
 	@PostMapping
 	public ResponseEntity<Void> insert(@Valid @RequestBody Cliente obj) {
 		obj = service.insert(obj);
@@ -42,14 +43,14 @@ public class ClienteResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
-	//@PreAuthorize("hasAnyRole('ADMIN', 'RECEPCIONISTA')")
+	@PreAuthorize("hasAnyRole('ADMIN', 'RECEPCIONISTA')")
 	@GetMapping
     public ResponseEntity<List<Cliente>> findAll() {
         List<Cliente> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 	
-	//@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping(value="/{id}")
 	public ResponseEntity<Void> update(@Valid @RequestBody Cliente obj, @PathVariable Integer id){
 		obj.setId(id);
