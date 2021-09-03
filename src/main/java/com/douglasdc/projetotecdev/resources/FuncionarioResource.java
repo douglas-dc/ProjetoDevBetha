@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.douglasdc.projetotecdev.domain.Funcionario;
+import com.douglasdc.projetotecdev.dto.FuncionarioDTO;
 import com.douglasdc.projetotecdev.services.FuncionarioService;
 
 @RestController
@@ -34,7 +36,7 @@ public class FuncionarioResource {
 		return ResponseEntity.ok().body(obj);
 	}
 
-	//@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping
 	public ResponseEntity<Void> insert(@Valid @RequestBody Funcionario obj) {
 		obj = service.insert(obj);
@@ -43,23 +45,24 @@ public class FuncionarioResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
-	//@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 		@GetMapping
 	    public ResponseEntity<List<Funcionario>> findAll() {
 	        List<Funcionario> list = service.findAll();
 	        return ResponseEntity.ok().body(list);
 	    }
 	
-	//@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping(value="/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
-	//@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping(value="/{id}")
-	public ResponseEntity<Void> update(@RequestBody Funcionario obj, @PathVariable Integer id){
+	public ResponseEntity<Void> update(@RequestBody FuncionarioDTO objDto, @PathVariable Integer id){
+		Funcionario obj = service.fromDTO(objDto);
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();

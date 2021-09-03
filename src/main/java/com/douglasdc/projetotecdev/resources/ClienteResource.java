@@ -43,14 +43,14 @@ public class ClienteResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN', 'RECEPCIONISTA')")
+	@PreAuthorize("hasAnyRole('ADMIN', 'RECEPCIONISTA', 'TECNICO')")
 	@GetMapping
     public ResponseEntity<List<Cliente>> findAll() {
         List<Cliente> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN', 'RECEPCIONISTA')")
 	@PutMapping(value="/{id}")
 	public ResponseEntity<Void> update(@Valid @RequestBody Cliente obj, @PathVariable Integer id){
 		obj.setId(id);
